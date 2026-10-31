@@ -33,7 +33,9 @@ Both share the 8.04 GB Qwen3-4B text encoder and the 0.34 GB VAE, which is why `
 - **03 / 04 Base** — the same pair on the 25-step model.
 - **10 / 11 Advanced** — Comfy-Org's own upstream templates for turbo and base, kept verbatim as a reference.
 
-Image-to-image loads your picture, VAE-encodes it and denoises toward the prompt at `denoise` 0.6. Lower values keep more of the source; raise it toward 1.0 for a freer reinterpretation.
+Image-to-image loads your picture, scales it to about **1 megapixel** (in multiples of 16, so a very large upload cannot exhaust GPU memory), VAE-encodes it and denoises toward the prompt at `denoise` 0.6. Lower values keep more of the source; raise it toward 1.0 for a freer reinterpretation. Raise `megapixels` on the scale node for a larger working size, at the cost of memory.
+
+Z-Image is a text-to-image model, so this is **image-to-image variation**, not instruction-following editing: describe the picture you want rather than the change to make. For instruction-based edits, use the Qwen Image Edit package.
 
 The sampler is `res_multistep` with the `simple` schedule and a `ModelSamplingAuraFlow` shift of 3, matching the upstream templates. Canvas defaults to **1280 × 720**.
 
@@ -62,7 +64,9 @@ A strip of recent output images sits along the bottom of the window and refreshe
 
 All container builds and runtime tests run in **GitHub Actions**, never on a local workstation. Pushing to `develop` or `main` builds, runs source and template-parity checks, verifies every packaged graph against a CPU-only ComfyUI, and publishes the image.
 
-Paid GPU tests are opt-in through the `gpu_smoke` dispatch input. When set, Actions launches a disposable 48 GB Pod from that exact image digest, renders every packaged workflow at 512 × 512, and checks dimensions, pixel variance, entropy and flatness. Those checks catch blank, flat and passthrough output, not artistic quality.
+Paid GPU tests are opt-in through the `gpu_smoke` dispatch input. When set, Actions launches a disposable 48 GB Pod from that exact image digest, renders every packaged workflow at 512 × 512 (each variant generates first, then varies its own output), and checks dimensions, pixel variance, entropy and flatness, and that a variation genuinely differs from its source. Those checks catch blank, flat and passthrough output, not artistic quality.
+
+`scripts/build-workflows.py` regenerates the packaged workflows, in API and UI form, from a single specification, so the two cannot drift; edit that rather than the JSON.
 
 `scripts/test-runpod.py` also runs by hand: `--keep` leaves the Pod up, `--pod <id>` re-runs against a running Pod with randomised seeds, and `--cleanup` deletes it.
 

@@ -50,7 +50,7 @@
       "text": "blurry, low resolution, jpeg artifacts, watermark, signature, text overlay, deformed, extra limbs"
     }
   },
-  "8": {
+  "9": {
     "class_type": "EmptySD3LatentImage",
     "inputs": {
       "width": 1280,
@@ -58,7 +58,7 @@
       "batch_size": 1
     }
   },
-  "9": {
+  "10": {
     "class_type": "KSampler",
     "inputs": {
       "model": [
@@ -74,22 +74,22 @@
         0
       ],
       "latent_image": [
-        "8",
+        "9",
         0
       ],
       "seed": 0,
       "steps": 8,
-      "cfg": 1,
+      "cfg": 1.0,
       "sampler_name": "res_multistep",
       "scheduler": "simple",
       "denoise": 1.0
     }
   },
-  "10": {
+  "11": {
     "class_type": "VAEDecode",
     "inputs": {
       "samples": [
-        "9",
+        "10",
         0
       ],
       "vae": [
@@ -98,11 +98,11 @@
       ]
     }
   },
-  "11": {
+  "12": {
     "class_type": "SaveImage",
     "inputs": {
       "images": [
-        "10",
+        "11",
         0
       ],
       "filename_prefix": "ZImage/turbo"

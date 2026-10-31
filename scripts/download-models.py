@@ -5,7 +5,9 @@ from huggingface_hub import hf_hub_download,snapshot_download
 version=os.getenv('STUDIO_VERSION','3')
 p=json.loads(Path('/opt/acdev/versions/%s/profile.json'%version).read_text())
 mode=os.getenv('MODEL_MODE','both')
-variants=sorted({m.get('variant') for m in p['models']+p.get('snapshots',[]) if m.get('variant')})
+# A variant need not own a file (Qwen's standard mode is the base model without the LoRA), so the
+# profile may declare its variants outright; otherwise infer them from the tagged models.
+variants=list(p.get('variants') or sorted({m.get('variant') for m in p['models']+p.get('snapshots',[]) if m.get('variant')}))
 allowed=variants+['both'] if variants else ['both']
 if mode not in allowed:raise SystemExit('MODEL_MODE for generation %s must be one of: %s'%(version,', '.join(allowed)))
 token=os.getenv('HF_TOKEN','').strip()
