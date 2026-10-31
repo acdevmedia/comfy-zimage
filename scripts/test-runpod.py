@@ -109,12 +109,14 @@ def main():
  for suffix in ('','.pub'):(OUT/('test-key'+suffix)).unlink(missing_ok=True)
  subprocess.run(['ssh-keygen','-q','-t','ed25519','-N','','-f',str(OUT/'test-key')],stdin=subprocess.DEVNULL,check=True)
  config=json.loads((ROOT/'config/runpod-template.json').read_text());env={**config['env'],'PUBLIC_KEY':(OUT/'test-key.pub').read_text().strip()}
+ # The matrix executes every packaged graph, so the Pod needs every variant's weights.
+ env['MODEL_MODE']=os.environ.get('VALIDATION_MODEL_MODE','both')
  payload={'name':f'acdev-{PROFILE["kind"]}-{os.environ.get("GITHUB_RUN_ID","test")}-validation','imageName':config['imageName'].split(':')[0]+'@'+digest,'cloudType':'SECURE','computeType':'GPU','gpuTypeIds':GPU_TYPES,'gpuTypePriority':'availability','gpuCount':1,'containerDiskInGb':200,'volumeInGb':0,'volumeMountPath':'/workspace','ports':['8188/http','2222/tcp'],'supportPublicIp':True,'env':env}
  if os.environ.get('RUNPOD_REGISTRY_AUTH_ID'):payload['containerRegistryAuthId']=os.environ['RUNPOD_REGISTRY_AUTH_ID']
  def deadline(signum, frame):raise TimeoutError('Validation deadline reached; deleting test pod')
  signal.signal(signal.SIGALRM, deadline)
  signal.signal(signal.SIGTERM, deadline)
- signal.alarm(45 * 60)
+ signal.alarm(int(os.environ.get('VALIDATION_DEADLINE_MINUTES','45')) * 60)
  pod={'id':args.pod} if args.pod else None
  if not args.pod:
   existing=[x for x in cloud('/pods') if x.get('name')==payload['name']]

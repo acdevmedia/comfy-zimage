@@ -10,7 +10,7 @@
       "revision": "6fc90a3b1b653e935a0d175e260736de25b84df5",
       "file": "split_files/diffusion_models/z_image_turbo_bf16.safetensors",
       "destination": "diffusion_models/z_image_turbo_bf16.safetensors",
-      "sha256": "108e591ea419cb178f4c5c8c08d6c53c44ea3d787733b2b82738cbbd1d7a39be",
+      "sha256": "2407613050b809ffdff18a4ac99af83ea6b95443ecebdf80e064a79c825574a6",
       "size": 12309866400,
       "variant": "turbo"
     },
@@ -19,7 +19,7 @@
       "revision": "94d47a468ec820d29a5dc09d4642539d76d49542",
       "file": "split_files/diffusion_models/z_image_bf16.safetensors",
       "destination": "diffusion_models/z_image_bf16.safetensors",
-      "sha256": "da50897c1cafc7e47989c9b4012ba51e23bde7f97785163bba4f92155dafb4c5",
+      "sha256": "996a67d3ff666946b1c25cbc16d1b1918b6cc0ac166309e23fe3b3d830263dee",
       "size": 12309866400,
       "variant": "base"
     },
@@ -28,7 +28,7 @@
       "revision": "6fc90a3b1b653e935a0d175e260736de25b84df5",
       "file": "split_files/text_encoders/qwen_3_4b.safetensors",
       "destination": "text_encoders/qwen_3_4b.safetensors",
-      "sha256": "f459cd74b7868799ea82f97601a650afcedc399596dc262f302e3505761c9995",
+      "sha256": "6c671498573ac2f7a5501502ccce8d2b08ea6ca2f661c458e708f36b36edfc5a",
       "size": 8044982048
     },
     {
@@ -36,7 +36,7 @@
       "revision": "6fc90a3b1b653e935a0d175e260736de25b84df5",
       "file": "split_files/vae/ae.safetensors",
       "destination": "vae/ae.safetensors",
-      "sha256": "f744f169fc8c7d1c8fcfdfdbd86251d518c801084880373c77e1cf31bcff827e",
+      "sha256": "afc8e28272cd15db3919bacdb6918ce9c1ed22e96cb12c4d5ed0fba823529e38",
       "size": 335304388
     }
   ]
