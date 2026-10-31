@@ -1,5 +1,7 @@
 # Z-Image Turbo ComfyUI One-Click
 
+[![Runpod](https://api.runpod.io/badge/acdevmedia/comfy-zimage)](https://console.runpod.io/hub/listing/acdevmedia/comfy-zimage)
+
 Z-Image running locally in ComfyUI: the eight-step **Turbo** model and the 25-step **base** model, with text-to-image and image-to-image for each. Weights are published ungated by Tongyi-MAI and packaged for ComfyUI by Comfy-Org, so there is no access agreement and no token to configure.
 
 Container: **`ghcr.io/acdevmedia/zimage-comfyui:1`**, with an immutable `1-sha-<commit>` tag per build. Model revisions, checksums and workflow defaults live under `versions/1/`.
