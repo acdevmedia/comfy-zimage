@@ -1,0 +1,40 @@
+{
+  "title": "Z-Image Turbo ComfyUI One-Click",
+  "description": "Z-Image Turbo and base text-to-image and image-to-image in ComfyUI, on native nodes.",
+  "type": "serverless",
+  "category": "image",
+  "config": {
+    "runsOn": "GPU",
+    "endpointType": "LB",
+    "containerDiskInGb": 200,
+    "gpuCount": 1,
+    "gpuIds": "ADA_48_PRO,AMPERE_48",
+    "allowedCudaVersions": [
+      "12.8",
+      "12.9",
+      "13.0"
+    ],
+    "env": [
+      {
+        "key": "HF_HOME",
+        "value": "/workspace/.cache/huggingface"
+      },
+      {
+        "key": "MODEL_MODE",
+        "value": "turbo"
+      },
+      {
+        "key": "STUDIO_VERSION",
+        "value": "1"
+      },
+      {
+        "key": "PORT",
+        "value": "8000"
+      },
+      {
+        "key": "PORT_HEALTH",
+        "value": "8001"
+      }
+    ]
+  }
+}

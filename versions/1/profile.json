@@ -1,0 +1,43 @@
+{
+  "kind": "zimage",
+  "version": "1",
+  "comfyui_commit": "b5a432157de6b8884f81104cd02926adf4d597e4",
+  "container_image": "ghcr.io/acdevmedia/zimage-comfyui:1",
+  "default_mode": "turbo",
+  "models": [
+    {
+      "repo": "Comfy-Org/Z-Image-Turbo",
+      "revision": "6fc90a3b1b653e935a0d175e260736de25b84df5",
+      "file": "split_files/diffusion_models/z_image_turbo_bf16.safetensors",
+      "destination": "diffusion_models/z_image_turbo_bf16.safetensors",
+      "sha256": "108e591ea419cb178f4c5c8c08d6c53c44ea3d787733b2b82738cbbd1d7a39be",
+      "size": 12309866400,
+      "variant": "turbo"
+    },
+    {
+      "repo": "Comfy-Org/Z-Image",
+      "revision": "94d47a468ec820d29a5dc09d4642539d76d49542",
+      "file": "split_files/diffusion_models/z_image_bf16.safetensors",
+      "destination": "diffusion_models/z_image_bf16.safetensors",
+      "sha256": "da50897c1cafc7e47989c9b4012ba51e23bde7f97785163bba4f92155dafb4c5",
+      "size": 12309866400,
+      "variant": "base"
+    },
+    {
+      "repo": "Comfy-Org/Z-Image-Turbo",
+      "revision": "6fc90a3b1b653e935a0d175e260736de25b84df5",
+      "file": "split_files/text_encoders/qwen_3_4b.safetensors",
+      "destination": "text_encoders/qwen_3_4b.safetensors",
+      "sha256": "f459cd74b7868799ea82f97601a650afcedc399596dc262f302e3505761c9995",
+      "size": 8044982048
+    },
+    {
+      "repo": "Comfy-Org/Z-Image-Turbo",
+      "revision": "6fc90a3b1b653e935a0d175e260736de25b84df5",
+      "file": "split_files/vae/ae.safetensors",
+      "destination": "vae/ae.safetensors",
+      "sha256": "f744f169fc8c7d1c8fcfdfdbd86251d518c801084880373c77e1cf31bcff827e",
+      "size": 335304388
+    }
+  ]
+}

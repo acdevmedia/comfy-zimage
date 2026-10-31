@@ -1,0 +1,23 @@
+{
+  "templateId": "flzb1wunuh",
+  "templateName": "Z-Image Turbo ComfyUI One-Click",
+  "imageName": "ghcr.io/acdevmedia/zimage-comfyui:1",
+  "containerDiskInGb": 200,
+  "volumeMountPath": "/workspace",
+  "ports": [
+    "8188/http"
+  ],
+  "env": {
+    "HF_HOME": "/workspace/.cache/huggingface",
+    "MODEL_MODE": "turbo",
+    "STUDIO_VERSION": "1",
+    "PORT": "8000",
+    "PORT_HEALTH": "8001"
+  },
+  "isPublic": true,
+  "startJupyter": false,
+  "startSsh": false,
+  "dockerEntrypoint": null,
+  "dockerStartCmd": null,
+  "volumeInGb": 0
+}

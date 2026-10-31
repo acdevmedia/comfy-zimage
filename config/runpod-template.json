@@ -1,0 +1,20 @@
+{
+  "name": "Z-Image Turbo ComfyUI One-Click",
+  "imageName": "ghcr.io/acdevmedia/zimage-comfyui:1",
+  "category": "NVIDIA",
+  "containerDiskInGb": 200,
+  "volumeInGb": 0,
+  "volumeMountPath": "/workspace",
+  "isPublic": true,
+  "isServerless": false,
+  "ports": [
+    "8188/http"
+  ],
+  "env": {
+    "HF_HOME": "/workspace/.cache/huggingface",
+    "MODEL_MODE": "turbo",
+    "STUDIO_VERSION": "1",
+    "PORT": "8000",
+    "PORT_HEALTH": "8001"
+  }
+}
