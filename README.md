@@ -2,7 +2,7 @@
 
 [![Runpod](https://api.runpod.io/badge/acdevmedia/comfy-zimage)](https://console.runpod.io/hub/listing/acdevmedia/comfy-zimage)
 
-Z-Image running locally in ComfyUI: the eight-step **Turbo** model and the 25-step **base** model, with text-to-image and image-to-image for each. Weights are published ungated by Tongyi-MAI and packaged for ComfyUI by Comfy-Org, so there is no access agreement and no token to configure.
+Z-Image running locally in ComfyUI: the eight-step **Turbo** model and the 25-step **base** model, with text-to-image and image-to-image for each. Weights are published ungated by Tongyi-MAI and packaged for ComfyUI by Comfy-Org, so there is no access agreement and no mandatory token.
 
 Container: **`ghcr.io/acdevmedia/zimage-comfyui:1`**, with an immutable `1-sha-<commit>` tag per build. Model revisions, checksums and workflow defaults live under `versions/1/`.
 
@@ -15,7 +15,7 @@ Everything runs on ComfyUI's **native** Z-Image support — no custom nodes and 
 3. Open **Connect → HTTP 8188 / ComfyUI** once the service reports Ready. First boot downloads the pinned weights into `/workspace/ComfyUI/models`.
 4. Pick a workflow in the sidebar, type a prompt, press Queue.
 
-No Hugging Face token is needed. Supplying one is optional and only helps with download rate limits.
+For authenticated downloads, create Runpod Secret `HUGGINGFACE_TOKEN` with your Hugging Face read token; the template maps it to `HF_TOKEN`. The weights are ungated, so you can remove the mapping to download anonymously. A token is optional and improves download rate limits.
 
 Storage is temporary and no network volume is attached. First-boot downloads resume, your workflow edits persist across restarts, and no weights or credentials are baked into the image.
 
@@ -53,6 +53,7 @@ A strip of recent output images sits along the bottom of the window and refreshe
 
 ## Environment variables
 
+- `HF_TOKEN`: `{{ RUNPOD_SECRET_HUGGINGFACE_TOKEN }}`; optional read token for authenticated Hugging Face downloads.
 - `HF_HOME=/workspace/.cache/huggingface`: Hugging Face cache and metadata location.
 - `MODEL_MODE=turbo`: which variant to download — `turbo`, `base` or `both`.
 - `STUDIO_VERSION=1`: which generation this image serves, baked at build time from `versions/1/profile.json`.

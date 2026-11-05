@@ -12,6 +12,7 @@ readme = (ROOT / 'README.md').read_text()
 entries = {entry['key']: entry for entry in hub['config']['env']}
 assert len(entries) == len(hub['config']['env']), 'Duplicate Hub environment keys'
 test_env = {entry['key']: entry['value'] for entry in tests['config']['env']}
+assert template['env']['HF_TOKEN'] == '{{ RUNPOD_SECRET_HUGGINGFACE_TOKEN }}', 'HF secret mapping must reach the downloader'
 assert template['env'] == source['env']
 assert template['name'] == source['templateName']
 assert template['isPublic'] == source['isPublic']

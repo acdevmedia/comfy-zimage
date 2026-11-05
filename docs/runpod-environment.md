@@ -10,9 +10,15 @@ Image: `ghcr.io/acdevmedia/zimage-comfyui:1`. Container disk: **200 GB**. Worksp
 
 ## Credentials
 
-**None required.** Z-Image's weights are published ungated, so first boot downloads them anonymously. Supplying `HF_TOKEN` is optional and is honoured if present, which helps only with Hugging Face rate limits.
+The template maps Runpod Secret `HUGGINGFACE_TOKEN` to `HF_TOKEN` for authenticated downloads and higher rate limits. Create that secret with a Hugging Face read token. The weights remain ungated: users without a token can remove the mapping and download anonymously. No credential values are stored in the repository or image.
 
 ## Template variables
+
+### `HF_TOKEN`
+
+Default: `{{ RUNPOD_SECRET_HUGGINGFACE_TOKEN }}`.
+
+Optional Hugging Face read token from Runpod Secret `HUGGINGFACE_TOKEN`. Remove the mapping to use anonymous downloads.
 
 ### `HF_HOME`
 

@@ -16,6 +16,10 @@
     ],
     "env": [
       {
+        "key": "HF_TOKEN",
+        "value": "{{ RUNPOD_SECRET_HUGGINGFACE_TOKEN }}"
+      },
+      {
         "key": "HF_HOME",
         "value": "/workspace/.cache/huggingface"
       },
