@@ -88,7 +88,7 @@ def check(api, ui):
         assert sslot < len(by_id[src]['outputs']), ('source slot out of range', lid)
         assert by_id[src]['outputs'][sslot]['type'] == typ, ('source type mismatch', lid)
         dest = by_id[dst]['inputs']
-        assert dslot < len(dest) and dest[dslot]['link'] == lid and dest[dslot]['type'] == typ, \
+        assert dslot < len(dest) and dest[dslot]['link'] == lid and typ in dest[dslot]['type'].split(','), \
             ('destination not wired back', lid)
     api_links = sum(1 for n in api.values() for v in n['inputs'].values() if is_link(v))
     assert api_links == len(ui['links']), ('API and UI graphs disagree on link count', api_links, len(ui['links']))

@@ -4,6 +4,8 @@ import uuid
 from pathlib import Path
 
 LATENTS = {'EmptySD3LatentImage', 'EmptyFlux2LatentImage', 'EmptyLatentImage', 'EmptyLTXVLatentVideo'}
+RESIZE = 'Resize reference to render width and height'
+FITTED = 'Resize image to the fitted frame'
 
 def link_parts(link):
     if isinstance(link, dict):
@@ -71,7 +73,7 @@ def apply_dimensions(data, default=None):
                 # Explicit dimensions replace automatic megapixel sizing for image edits.
                 node['type'] = 'ImageScale'
                 node.setdefault('properties',{})['Node name for S&R'] = 'ImageScale'
-                node['title'] = 'Resize reference to render width and height'
+                node['title'] = RESIZE
                 node['inputs'] = [x for x in node.get('inputs',[]) if x['name'] in ('image','input')]
                 node['inputs'][0]['name']='image'
                 method = 'lanczos'
@@ -81,7 +83,7 @@ def apply_dimensions(data, default=None):
                 for dim in ('width','height'):
                     slot=len(node['inputs']);node['inputs'].append({'name':dim,'type':'INT','widget':{'name':dim},'link':None})
                     targets.append((graph,parents,node,slot,dim))
-            elif node['type']=='ImageScale' and node.get('title')=='Resize reference to render width and height':
+            elif node['type']=='ImageScale' and node.get('title')==RESIZE:
                 for slot, inp in enumerate(node['inputs']):
                     if inp['name'] in ('width','height'):targets.append((graph,parents,node,slot,inp['name']))
     if not targets:
@@ -178,6 +180,69 @@ def sync_api(api, ui):
                 if inp['name'] in ('width','height') and inp.get('link') is not None:
                     link=next(link_parts(l) for l in ui['links'] if link_parts(l)[0]==inp['link'])
                     api[nid]['inputs'][inp['name']]=[str(link[1]),link[2]]
+
+def fit_expression(mine, other, step):
+    """One side of a frame with area a*b and the proportions of a c x d image, on the model's grid."""
+    return 'max(64,round(sqrt(a*b*%s/%s)/%d)*%d)'%(mine,other,step,step)
+
+def fit_frame_to_image(api, ui, step):
+    """Size the first image's resize from the image itself, so no part of it is cropped away.
+
+    Render Width and Height set the frame's area and the upload sets its proportions: a head-to-toe
+    portrait stays head to toe, and a typed size that already matches the image comes back unchanged.
+    """
+    scale = next((n for n in ui['nodes'] if n['type'] == 'ImageScale' and n.get('title') == RESIZE), None)
+    if scale is None:
+        return False
+    slots = {inp['name']: slot for slot, inp in enumerate(scale['inputs'])}
+    def origin(name):
+        return next(link_parts(l)[1] for l in ui['links'] if link_parts(l)[0] == scale['inputs'][slots[name]]['link'])
+    image, width, height = origin('image'), origin('width'), origin('height')
+    for name in ('width', 'height'):
+        remove_input_link(ui, scale, slots[name])
+    size, fit_w, fit_h = (ui['last_node_id'] + offset for offset in (1, 2, 3))
+    next_link = ui['last_link_id']
+    def connect(source, source_slot, target, target_slot, kind):
+        nonlocal next_link
+        next_link += 1
+        ui['links'].append([next_link, source['id'], source_slot, target['id'], target_slot, kind])
+        output = source['outputs'][source_slot]
+        output['links'] = (output.get('links') or []) + [next_link]
+        target['inputs'][target_slot]['link'] = next_link
+    x, y = scale['pos']
+    getter = {'id': size, 'type': 'GetImageSize', 'pos': [x - 340, y + 330], 'size': [320, 120], 'flags': {}, 'order': 0, 'mode': 0,
+              'inputs': [{'name': 'image', 'type': 'IMAGE', 'link': None}],
+              'outputs': [{'name': name, 'type': 'INT', 'links': None, 'slot_index': i} for i, name in enumerate(('width', 'height', 'batch_size'))],
+              'title': 'Size of your image', 'properties': {'Node name for S&R': 'GetImageSize'}, 'widgets_values': []}
+    def fit(node_id, title, expression, row):
+        return {'id': node_id, 'type': 'ComfyMathExpression', 'pos': [x, y + 330 + row * 200], 'size': [320, 180], 'flags': {}, 'order': 0, 'mode': 0,
+                'inputs': [{'name': 'expression', 'type': 'STRING', 'link': None, 'widget': {'name': 'expression'}}] +
+                          [{'name': 'values.' + letter, 'type': 'FLOAT,INT,BOOLEAN', 'link': None} for letter in 'abcd'],
+                'outputs': [{'name': 'FLOAT', 'type': 'FLOAT', 'links': None, 'slot_index': 0}, {'name': 'INT', 'type': 'INT', 'links': None, 'slot_index': 1},
+                            {'name': 'BOOL', 'type': 'BOOLEAN', 'links': None, 'slot_index': 2}],
+                'title': title, 'properties': {'Node name for S&R': 'ComfyMathExpression'}, 'widgets_values': [expression]}
+    width_node = fit(fit_w, 'Fit Frame Width', fit_expression('c', 'd', step), 0)
+    height_node = fit(fit_h, 'Fit Frame Height', fit_expression('d', 'c', step), 1)
+    ui['nodes'] += [getter, width_node, height_node]
+    nodes = {n['id']: n for n in ui['nodes']}
+    connect(nodes[image], 0, getter, 0, 'IMAGE')
+    for node in (width_node, height_node):
+        connect(nodes[width], 0, node, 1, 'INT')
+        connect(nodes[height], 0, node, 2, 'INT')
+        connect(getter, 0, node, 3, 'INT')
+        connect(getter, 1, node, 4, 'INT')
+    connect(width_node, 1, scale, slots['width'], 'INT')
+    connect(height_node, 1, scale, slots['height'], 'INT')
+    scale['title'] = FITTED
+    scale['widgets_values'][3] = 'disabled'
+    ui['last_node_id'], ui['last_link_id'] = fit_h, next_link
+    api[str(size)] = {'class_type': 'GetImageSize', 'inputs': {'image': [str(image), 0]}}
+    for node_id, expression in ((fit_w, width_node), (fit_h, height_node)):
+        api[str(node_id)] = {'class_type': 'ComfyMathExpression', 'inputs': {
+            'expression': expression['widgets_values'][0], 'values.a': [str(width), 0], 'values.b': [str(height), 0],
+            'values.c': [str(size), 0], 'values.d': [str(size), 1]}}
+    api[str(scale['id'])]['inputs'].update(width=[str(fit_w), 1], height=[str(fit_h), 1], crop='disabled')
+    return True
 
 def main():
     root=Path(__file__).resolve().parents[1]

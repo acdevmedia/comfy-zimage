@@ -64,14 +64,14 @@
         0
       ],
       "upscale_method": "lanczos",
-      "crop": "center",
+      "crop": "disabled",
       "width": [
-        "13",
-        0
+        "16",
+        1
       ],
       "height": [
-        "14",
-        0
+        "17",
+        1
       ]
     }
   },
@@ -148,6 +148,59 @@
     "class_type": "PrimitiveInt",
     "inputs": {
       "value": 720
+    }
+  },
+  "15": {
+    "class_type": "GetImageSize",
+    "inputs": {
+      "image": [
+        "7",
+        0
+      ]
+    }
+  },
+  "16": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "expression": "max(64,round(sqrt(a*b*c/d)/16)*16)",
+      "values.a": [
+        "13",
+        0
+      ],
+      "values.b": [
+        "14",
+        0
+      ],
+      "values.c": [
+        "15",
+        0
+      ],
+      "values.d": [
+        "15",
+        1
+      ]
+    }
+  },
+  "17": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "expression": "max(64,round(sqrt(a*b*d/c)/16)*16)",
+      "values.a": [
+        "13",
+        0
+      ],
+      "values.b": [
+        "14",
+        0
+      ],
+      "values.c": [
+        "15",
+        0
+      ],
+      "values.d": [
+        "15",
+        1
+      ]
     }
   }
 }

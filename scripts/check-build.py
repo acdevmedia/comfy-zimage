@@ -17,7 +17,7 @@ with open('/tmp/comfy-build-check.log','w') as log:
    for node in graph.values():
     assert node['class_type'] in info,(path,node['class_type'])
     schema=info[node['class_type']]['input']
-    for key in schema.get('required',{}):assert key in node['inputs'],(path,key)
+    for key in schema.get('required',{}):assert key in node['inputs'] or any(i.startswith(key+'.') for i in node['inputs']),(path,key)
    print('PASS graph schema:',path.name,flush=True)
  finally:
   proc.terminate()

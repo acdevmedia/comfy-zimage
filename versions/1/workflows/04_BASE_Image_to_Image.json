@@ -1,6 +1,6 @@
 {
-  "last_node_id": 14,
-  "last_link_id": 15,
+  "last_node_id": 17,
+  "last_link_id": 26,
   "nodes": [
     {
       "id": 1,
@@ -237,7 +237,8 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            4
+            4,
+            16
           ],
           "slot_index": 0
         },
@@ -282,7 +283,7 @@
           "widget": {
             "name": "width"
           },
-          "link": 14
+          "link": 25
         },
         {
           "name": "height",
@@ -290,7 +291,7 @@
           "widget": {
             "name": "height"
           },
-          "link": 15
+          "link": 26
         }
       ],
       "outputs": [
@@ -310,9 +311,9 @@
         "lanczos",
         1280,
         720,
-        "center"
+        "disabled"
       ],
-      "title": "Resize reference to render width and height"
+      "title": "Resize image to the fitted frame"
     },
     {
       "id": 9,
@@ -505,7 +506,8 @@
           "name": "INT",
           "type": "INT",
           "links": [
-            14
+            17,
+            21
           ]
         }
       ],
@@ -538,7 +540,8 @@
           "name": "INT",
           "type": "INT",
           "links": [
-            15
+            18,
+            22
           ]
         }
       ],
@@ -548,6 +551,207 @@
       "widgets_values": [
         720,
         "fixed"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "GetImageSize",
+      "pos": [
+        40,
+        810
+      ],
+      "size": [
+        320,
+        120
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "links": [
+            19,
+            23
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "links": [
+            20,
+            24
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "batch_size",
+          "type": "INT",
+          "links": null,
+          "slot_index": 2
+        }
+      ],
+      "title": "Size of your image",
+      "properties": {
+        "Node name for S&R": "GetImageSize"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 16,
+      "type": "ComfyMathExpression",
+      "pos": [
+        380,
+        810
+      ],
+      "size": [
+        320,
+        180
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "expression",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "expression"
+          }
+        },
+        {
+          "name": "values.a",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 17
+        },
+        {
+          "name": "values.b",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 18
+        },
+        {
+          "name": "values.c",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 19
+        },
+        {
+          "name": "values.d",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": null,
+          "slot_index": 0
+        },
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            25
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "BOOL",
+          "type": "BOOLEAN",
+          "links": null,
+          "slot_index": 2
+        }
+      ],
+      "title": "Fit Frame Width",
+      "properties": {
+        "Node name for S&R": "ComfyMathExpression"
+      },
+      "widgets_values": [
+        "max(64,round(sqrt(a*b*c/d)/16)*16)"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "ComfyMathExpression",
+      "pos": [
+        380,
+        1010
+      ],
+      "size": [
+        320,
+        180
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "expression",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "expression"
+          }
+        },
+        {
+          "name": "values.a",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 21
+        },
+        {
+          "name": "values.b",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 22
+        },
+        {
+          "name": "values.c",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 23
+        },
+        {
+          "name": "values.d",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": null,
+          "slot_index": 0
+        },
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            26
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "BOOL",
+          "type": "BOOLEAN",
+          "links": null,
+          "slot_index": 2
+        }
+      ],
+      "title": "Fit Frame Height",
+      "properties": {
+        "Node name for S&R": "ComfyMathExpression"
+      },
+      "widgets_values": [
+        "max(64,round(sqrt(a*b*d/c)/16)*16)"
       ]
     }
   ],
@@ -657,17 +861,89 @@
       "IMAGE"
     ],
     [
-      14,
+      16,
+      7,
+      0,
+      15,
+      0,
+      "IMAGE"
+    ],
+    [
+      17,
       13,
       0,
+      16,
+      1,
+      "INT"
+    ],
+    [
+      18,
+      14,
+      0,
+      16,
+      2,
+      "INT"
+    ],
+    [
+      19,
+      15,
+      0,
+      16,
+      3,
+      "INT"
+    ],
+    [
+      20,
+      15,
+      1,
+      16,
+      4,
+      "INT"
+    ],
+    [
+      21,
+      13,
+      0,
+      17,
+      1,
+      "INT"
+    ],
+    [
+      22,
+      14,
+      0,
+      17,
+      2,
+      "INT"
+    ],
+    [
+      23,
+      15,
+      0,
+      17,
+      3,
+      "INT"
+    ],
+    [
+      24,
+      15,
+      1,
+      17,
+      4,
+      "INT"
+    ],
+    [
+      25,
+      16,
+      1,
       8,
       1,
       "INT"
     ],
     [
-      15,
-      14,
-      0,
+      26,
+      17,
+      1,
       8,
       2,
       "INT"

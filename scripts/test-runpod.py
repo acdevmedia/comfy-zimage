@@ -55,6 +55,7 @@ def apply_test_settings(graph,reuse):
   if c.endswith('Studio'):i.update(width=512,height=512)
   if c in ('EmptySD3LatentImage','EmptyFlux2LatentImage','EmptyLatentImage'):i.update(width=512,height=512)
   if c=='ImageScaleToTotalPixels':i['megapixels']=0.25
+  if c=='PrimitiveInt':i['value']=512
   # A fixed seed keeps runs comparable; a reused Pod needs a fresh one to defeat ComfyUI's cache.
   seed=random.randrange(1,2**31) if reuse else 42
   for key in ('seed','noise_seed'):

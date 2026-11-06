@@ -1,8 +1,9 @@
 """Check that render dimensions resolve to editable controls on the main canvas."""
 import copy
 import json
+import math
 from pathlib import Path
-from workflow_dimensions import LATENTS, apply_dimensions, link_parts
+from workflow_dimensions import FITTED, LATENTS, RESIZE, apply_dimensions, fit_expression, link_parts
 ROOT=Path(__file__).resolve().parents[1]
 
 def inspect(data):
@@ -50,6 +51,9 @@ def inspect(data):
             assert resize['type']=='ResizeImageMaskNode',resize['type']
             axis='width' if link[2]==0 else 'height'
             return resolve(g,parents,resize,'resize_type.'+axis,depth+1)
+        if source['type']=='ComfyMathExpression' and source.get('title','').startswith('Fit Frame'):
+            # Render Width and Height set the area; the image fills in the proportions.
+            return resolve(g,parents,source,'values.a' if source['title'].endswith('Width') else 'values.b',depth+1)
         if source['type']=='ComfyMathExpression':
             assert source['widgets_values'][0]=='a/2',source['widgets_values']
             control,name,value,factor=resolve(g,parents,source,'values.a',depth+1)
@@ -59,7 +63,7 @@ def inspect(data):
     targets=[]
     for g,parents in contexts:
         for n in g['nodes']:
-            if n['type'] in LATENTS or (n['type']=='ImageScale' and n.get('title')=='Resize reference to render width and height'):
+            if n['type'] in LATENTS or (n['type']=='ImageScale' and n.get('title') in (RESIZE,FITTED)):
                 for dim in ('width','height'):
                     control,name,value,factor=resolve(g,parents,n,dim)
                     assert isinstance(value,(int,float)) and value>0,(n['id'],dim,value)
@@ -77,6 +81,18 @@ def inspect(data):
         assert resolve(g,parents,n,dim)[2]==expected*factor
     return len(targets)
 
+def fitted(step, width, height, image_width, image_height):
+    names=dict(a=width,b=height,c=image_width,d=image_height,max=max,round=round,sqrt=math.sqrt)
+    return tuple(eval(fit_expression(*sides,step),{'__builtins__':{}},names) for sides in (('c','d'),('d','c')))
+
+# The render area stays put while the image sets the proportions, so a portrait is never sliced.
+assert fitted(32,1024,1024,1024,1536)==(832,1248)
+assert fitted(32,1024,1024,1920,1080)==(1376,768)
+assert fitted(16,1280,720,1920,1080)==(1280,720)
+assert fitted(16,1280,720,1080,1920)==(720,1280)
+assert fitted(16,1280,720,3000,3000)==(960,960)
+assert all(side%16==0 for side in fitted(16,1280,720,1234,5678))
+
 count=0
 for path in sorted(ROOT.glob('versions/*/workflows/*.json')):
     if path.name.startswith('LTX25_'):continue
@@ -85,6 +101,7 @@ for path in sorted(ROOT.glob('versions/*/workflows/*.json')):
     apply_dimensions(d,(768,448) if 'Ingredients' in path.name else None)
     assert d==before,(path.name,'dimensions were not packaged or packaging is not idempotent')
     if any(n['type'] in ('AcdevFluxStudio','AcdevIdeogramStudio') for n in d['nodes']):continue
+    assert not any(n['type']=='ImageScale' and n.get('title')==FITTED and n['widgets_values'][3]!='disabled' for n in d['nodes']),(path.name,'a fitted frame must not crop')
     found=inspect(d)
     assert found or 'Audio' in path.name and not any(n['type']=='SaveVideo' for n in d['nodes']),(path.name,'no editable render dimensions')
     count+=1

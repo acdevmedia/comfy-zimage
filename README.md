@@ -35,7 +35,7 @@ Both share the 8.04 GB Qwen3-4B text encoder and the 0.34 GB VAE, which is why `
 - **03 / 04 Base** — the same pair on the 25-step model.
 - **10 / 11 Advanced** — Comfy-Org's own upstream templates for turbo and base, kept verbatim as a reference.
 
-Image-to-image loads your picture, scales it to about **1 megapixel** (in multiples of 16, so a very large upload cannot exhaust GPU memory), VAE-encodes it and denoises toward the prompt at `denoise` 0.6. Lower values keep more of the source; raise it toward 1.0 for a freer reinterpretation. Raise `megapixels` on the scale node for a larger working size, at the cost of memory.
+Image-to-image loads your picture and uses it whole: **Render Width** and **Render Height** set the frame's area and the picture sets its shape, in multiples of 16, so a portrait stays a portrait and a very large upload cannot exhaust GPU memory. It then VAE-encodes it and denoises toward the prompt at `denoise` 0.6. Lower values keep more of the source; raise it toward 1.0 for a freer reinterpretation. Raise `megapixels` on the scale node for a larger working size, at the cost of memory.
 
 Z-Image is a text-to-image model, so this is **image-to-image variation**, not instruction-following editing: describe the picture you want rather than the change to make. For instruction-based edits, use the Qwen Image Edit package.
 
@@ -51,9 +51,17 @@ The seed widget carries ComfyUI's standard **control after generate**, set to `r
 
 A strip of recent output images sits along the bottom of the window and refreshes as each queued graph finishes. Click a thumbnail to open the viewer: arrow keys move through the batch, **space** picks, **D** downloads, **Escape** closes. **Download picked** saves only the chosen files, so you can queue a batch, skim it and keep a few.
 
+## Browse and download outputs
+
+**Connect → HTTP 3923 / Copyparty** opens a gallery of everything in `/workspace/ComfyUI/output`, newest first. Sign in with the values of Runpod Secrets `COPYPARTY_USERNAME` and `COPYPARTY_SECRET`. Select files to download them, or a whole folder as a ZIP. It is read-only: nothing can be uploaded, changed or deleted, and if either secret is missing it stays off without affecting ComfyUI. The log is `/workspace/logs/copyparty.log`.
+
+`zip`, `unzip` and `aws` are on the path in the terminal for moving outputs off the Pod yourself.
+
 ## Environment variables
 
 - `HF_TOKEN`: `{{ RUNPOD_SECRET_HUGGINGFACE_TOKEN }}`; optional read token for authenticated Hugging Face downloads.
+- `COPYPARTY_USERNAME`: `{{ RUNPOD_SECRET_COPYPARTY_USERNAME }}`; login for the file browser on port 3923.
+- `COPYPARTY_PASSWORD`: `{{ RUNPOD_SECRET_COPYPARTY_SECRET }}`; its password. The browser stays off without both.
 - `HF_HOME=/workspace/.cache/huggingface`: Hugging Face cache and metadata location.
 - `MODEL_MODE=turbo`: which variant to download — `turbo`, `base` or `both`.
 - `STUDIO_VERSION=1`: which generation this image serves, baked at build time from `versions/1/profile.json`.

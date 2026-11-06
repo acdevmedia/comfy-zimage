@@ -5,7 +5,8 @@
   "containerDiskInGb": 200,
   "volumeMountPath": "/workspace",
   "ports": [
-    "8188/http"
+    "8188/http",
+    "3923/http"
   ],
   "env": {
     "HF_HOME": "/workspace/.cache/huggingface",
@@ -13,7 +14,9 @@
     "STUDIO_VERSION": "1",
     "PORT": "8000",
     "PORT_HEALTH": "8001",
-    "HF_TOKEN": "{{ RUNPOD_SECRET_HUGGINGFACE_TOKEN }}"
+    "HF_TOKEN": "{{ RUNPOD_SECRET_HUGGINGFACE_TOKEN }}",
+    "COPYPARTY_USERNAME": "{{ RUNPOD_SECRET_COPYPARTY_USERNAME }}",
+    "COPYPARTY_PASSWORD": "{{ RUNPOD_SECRET_COPYPARTY_SECRET }}"
   },
   "isPublic": true,
   "startJupyter": false,
