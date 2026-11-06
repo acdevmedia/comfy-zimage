@@ -6,6 +6,7 @@ from pathlib import Path
 LATENTS = {'EmptySD3LatentImage', 'EmptyFlux2LatentImage', 'EmptyLatentImage', 'EmptyLTXVLatentVideo'}
 RESIZE = 'Resize reference to render width and height'
 FITTED = 'Resize image to the fitted frame'
+EXACT = 'Exact Frame: use Render Width and Height, cropping the image'
 
 def link_parts(link):
     if isinstance(link, dict):
@@ -190,6 +191,7 @@ def fit_frame_to_image(api, ui, step):
 
     Render Width and Height set the frame's area and the upload sets its proportions: a head-to-toe
     portrait stays head to toe, and a typed size that already matches the image comes back unchanged.
+    Exact Frame, off by default, keeps the typed size instead and centre-crops the image to it.
     """
     scale = next((n for n in ui['nodes'] if n['type'] == 'ImageScale' and n.get('title') == RESIZE), None)
     if scale is None:
@@ -200,7 +202,7 @@ def fit_frame_to_image(api, ui, step):
     image, width, height = origin('image'), origin('width'), origin('height')
     for name in ('width', 'height'):
         remove_input_link(ui, scale, slots[name])
-    size, fit_w, fit_h = (ui['last_node_id'] + offset for offset in (1, 2, 3))
+    size, fit_w, fit_h, exact = (ui['last_node_id'] + offset for offset in (1, 2, 3, 4))
     next_link = ui['last_link_id']
     def connect(source, source_slot, target, target_slot, kind):
         nonlocal next_link
@@ -217,13 +219,16 @@ def fit_frame_to_image(api, ui, step):
     def fit(node_id, title, expression, row):
         return {'id': node_id, 'type': 'ComfyMathExpression', 'pos': [x, y + 330 + row * 200], 'size': [320, 180], 'flags': {}, 'order': 0, 'mode': 0,
                 'inputs': [{'name': 'expression', 'type': 'STRING', 'link': None, 'widget': {'name': 'expression'}}] +
-                          [{'name': 'values.' + letter, 'type': 'FLOAT,INT,BOOLEAN', 'link': None} for letter in 'abcd'],
+                          [{'name': 'values.' + letter, 'type': 'FLOAT,INT,BOOLEAN', 'link': None} for letter in 'abcde'],
                 'outputs': [{'name': 'FLOAT', 'type': 'FLOAT', 'links': None, 'slot_index': 0}, {'name': 'INT', 'type': 'INT', 'links': None, 'slot_index': 1},
                             {'name': 'BOOL', 'type': 'BOOLEAN', 'links': None, 'slot_index': 2}],
                 'title': title, 'properties': {'Node name for S&R': 'ComfyMathExpression'}, 'widgets_values': [expression]}
-    width_node = fit(fit_w, 'Fit Frame Width', fit_expression('c', 'd', step), 0)
-    height_node = fit(fit_h, 'Fit Frame Height', fit_expression('d', 'c', step), 1)
-    ui['nodes'] += [getter, width_node, height_node]
+    width_node = fit(fit_w, 'Fit Frame Width', 'a if e else ' + fit_expression('c', 'd', step), 0)
+    height_node = fit(fit_h, 'Fit Frame Height', 'b if e else ' + fit_expression('d', 'c', step), 1)
+    switch = {'id': exact, 'type': 'PrimitiveBoolean', 'title': EXACT, 'pos': [x - 340, y + 170], 'size': [320, 100], 'flags': {}, 'order': 0, 'mode': 0,
+              'inputs': [], 'outputs': [{'name': 'BOOLEAN', 'type': 'BOOLEAN', 'links': None, 'slot_index': 0}],
+              'properties': {'Node name for S&R': 'PrimitiveBoolean'}, 'widgets_values': [False]}
+    ui['nodes'] += [getter, width_node, height_node, switch]
     nodes = {n['id']: n for n in ui['nodes']}
     connect(nodes[image], 0, getter, 0, 'IMAGE')
     for node in (width_node, height_node):
@@ -231,17 +236,20 @@ def fit_frame_to_image(api, ui, step):
         connect(nodes[height], 0, node, 2, 'INT')
         connect(getter, 0, node, 3, 'INT')
         connect(getter, 1, node, 4, 'INT')
+        connect(switch, 0, node, 5, 'BOOLEAN')
     connect(width_node, 1, scale, slots['width'], 'INT')
     connect(height_node, 1, scale, slots['height'], 'INT')
     scale['title'] = FITTED
-    scale['widgets_values'][3] = 'disabled'
-    ui['last_node_id'], ui['last_link_id'] = fit_h, next_link
+    # Off, the frame has the image's shape and this only trims rounding; on, it does the crop.
+    scale['widgets_values'][3] = 'center'
+    ui['last_node_id'], ui['last_link_id'] = exact, next_link
     api[str(size)] = {'class_type': 'GetImageSize', 'inputs': {'image': [str(image), 0]}}
     for node_id, expression in ((fit_w, width_node), (fit_h, height_node)):
         api[str(node_id)] = {'class_type': 'ComfyMathExpression', 'inputs': {
             'expression': expression['widgets_values'][0], 'values.a': [str(width), 0], 'values.b': [str(height), 0],
-            'values.c': [str(size), 0], 'values.d': [str(size), 1]}}
-    api[str(scale['id'])]['inputs'].update(width=[str(fit_w), 1], height=[str(fit_h), 1], crop='disabled')
+            'values.c': [str(size), 0], 'values.d': [str(size), 1], 'values.e': [str(exact), 0]}}
+    api[str(exact)] = {'class_type': 'PrimitiveBoolean', 'inputs': {'value': False}}
+    api[str(scale['id'])]['inputs'].update(width=[str(fit_w), 1], height=[str(fit_h), 1], crop='center')
     return True
 
 def main():

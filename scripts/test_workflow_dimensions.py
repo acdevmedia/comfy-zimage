@@ -101,7 +101,8 @@ for path in sorted(ROOT.glob('versions/*/workflows/*.json')):
     apply_dimensions(d,(768,448) if 'Ingredients' in path.name else None)
     assert d==before,(path.name,'dimensions were not packaged or packaging is not idempotent')
     if any(n['type'] in ('AcdevFluxStudio','AcdevIdeogramStudio') for n in d['nodes']):continue
-    assert not any(n['type']=='ImageScale' and n.get('title')==FITTED and n['widgets_values'][3]!='disabled' for n in d['nodes']),(path.name,'a fitted frame must not crop')
+    assert not any(n['type']=='ImageScale' and n.get('title')==FITTED and n['widgets_values'][3]!='center' for n in d['nodes']),(path.name,'Exact Frame needs a crop, not a stretch')
+    assert not any(n['type']=='PrimitiveBoolean' and n['widgets_values'][0] for n in d['nodes']),(path.name,'Exact Frame must be off by default')
     found=inspect(d)
     assert found or 'Audio' in path.name and not any(n['type']=='SaveVideo' for n in d['nodes']),(path.name,'no editable render dimensions')
     count+=1

@@ -35,7 +35,7 @@ Both share the 8.04 GB Qwen3-4B text encoder and the 0.34 GB VAE, which is why `
 - **03 / 04 Base** — the same pair on the 25-step model.
 - **10 / 11 Advanced** — Comfy-Org's own upstream templates for turbo and base, kept verbatim as a reference.
 
-Image-to-image loads your picture and uses it whole: **Render Width** and **Render Height** set the frame's area and the picture sets its shape, in multiples of 16, so a portrait stays a portrait and a very large upload cannot exhaust GPU memory. It then VAE-encodes it and denoises toward the prompt at `denoise` 0.6. Lower values keep more of the source; raise it toward 1.0 for a freer reinterpretation. Raise `megapixels` on the scale node for a larger working size, at the cost of memory.
+Image-to-image loads your picture and uses it whole: **Render Width** and **Render Height** set the frame's area and the picture sets its shape, in multiples of 16, so a portrait stays a portrait and a very large upload cannot exhaust GPU memory. Turn on the **Exact Frame** node to use your typed size exactly, which centre-crops the image. It then VAE-encodes it and denoises toward the prompt at `denoise` 0.6. Lower values keep more of the source; raise it toward 1.0 for a freer reinterpretation. Raise `megapixels` on the scale node for a larger working size, at the cost of memory.
 
 Z-Image is a text-to-image model, so this is **image-to-image variation**, not instruction-following editing: describe the picture you want rather than the change to make. For instruction-based edits, use the Qwen Image Edit package.
 

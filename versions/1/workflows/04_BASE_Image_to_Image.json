@@ -1,6 +1,6 @@
 {
-  "last_node_id": 18,
-  "last_link_id": 27,
+  "last_node_id": 19,
+  "last_link_id": 29,
   "nodes": [
     {
       "id": 1,
@@ -283,7 +283,7 @@
           "widget": {
             "name": "width"
           },
-          "link": 25
+          "link": 27
         },
         {
           "name": "height",
@@ -291,7 +291,7 @@
           "widget": {
             "name": "height"
           },
-          "link": 26
+          "link": 28
         }
       ],
       "outputs": [
@@ -311,7 +311,7 @@
         "lanczos",
         1280,
         720,
-        "disabled"
+        "center"
       ],
       "title": "Resize image to the fitted frame"
     },
@@ -374,7 +374,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 27
+          "link": 29
         },
         {
           "name": "positive",
@@ -507,7 +507,7 @@
           "type": "INT",
           "links": [
             17,
-            21
+            22
           ]
         }
       ],
@@ -541,7 +541,7 @@
           "type": "INT",
           "links": [
             18,
-            22
+            23
           ]
         }
       ],
@@ -580,7 +580,7 @@
           "type": "INT",
           "links": [
             19,
-            23
+            24
           ],
           "slot_index": 0
         },
@@ -589,7 +589,7 @@
           "type": "INT",
           "links": [
             20,
-            24
+            25
           ],
           "slot_index": 1
         },
@@ -648,6 +648,11 @@
           "name": "values.d",
           "type": "FLOAT,INT,BOOLEAN",
           "link": 20
+        },
+        {
+          "name": "values.e",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 21
         }
       ],
       "outputs": [
@@ -661,7 +666,7 @@
           "name": "INT",
           "type": "INT",
           "links": [
-            25
+            27
           ],
           "slot_index": 1
         },
@@ -677,7 +682,7 @@
         "Node name for S&R": "ComfyMathExpression"
       },
       "widgets_values": [
-        "max(64,round(sqrt(a*b*c/d)/16)*16)"
+        "a if e else max(64,round(sqrt(a*b*c/d)/16)*16)"
       ]
     },
     {
@@ -706,22 +711,27 @@
         {
           "name": "values.a",
           "type": "FLOAT,INT,BOOLEAN",
-          "link": 21
+          "link": 22
         },
         {
           "name": "values.b",
           "type": "FLOAT,INT,BOOLEAN",
-          "link": 22
+          "link": 23
         },
         {
           "name": "values.c",
           "type": "FLOAT,INT,BOOLEAN",
-          "link": 23
+          "link": 24
         },
         {
           "name": "values.d",
           "type": "FLOAT,INT,BOOLEAN",
-          "link": 24
+          "link": 25
+        },
+        {
+          "name": "values.e",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 26
         }
       ],
       "outputs": [
@@ -735,7 +745,7 @@
           "name": "INT",
           "type": "INT",
           "links": [
-            26
+            28
           ],
           "slot_index": 1
         },
@@ -751,11 +761,45 @@
         "Node name for S&R": "ComfyMathExpression"
       },
       "widgets_values": [
-        "max(64,round(sqrt(a*b*d/c)/16)*16)"
+        "b if e else max(64,round(sqrt(a*b*d/c)/16)*16)"
       ]
     },
     {
       "id": 18,
+      "type": "PrimitiveBoolean",
+      "title": "Exact Frame: use Render Width and Height, cropping the image",
+      "pos": [
+        40,
+        650
+      ],
+      "size": [
+        320,
+        100
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "BOOLEAN",
+          "type": "BOOLEAN",
+          "links": [
+            21,
+            26
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveBoolean"
+      },
+      "widgets_values": [
+        false
+      ]
+    },
+    {
+      "id": 19,
       "type": "EasyCache",
       "title": "Draft mode: select and press Ctrl+B",
       "pos": [
@@ -781,7 +825,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            27
+            29
           ],
           "slot_index": 0
         }
@@ -850,7 +894,7 @@
       7,
       2,
       0,
-      18,
+      19,
       0,
       "MODEL"
     ],
@@ -944,6 +988,14 @@
     ],
     [
       21,
+      18,
+      0,
+      16,
+      5,
+      "BOOLEAN"
+    ],
+    [
+      22,
       13,
       0,
       17,
@@ -951,7 +1003,7 @@
       "INT"
     ],
     [
-      22,
+      23,
       14,
       0,
       17,
@@ -959,7 +1011,7 @@
       "INT"
     ],
     [
-      23,
+      24,
       15,
       0,
       17,
@@ -967,7 +1019,7 @@
       "INT"
     ],
     [
-      24,
+      25,
       15,
       1,
       17,
@@ -975,7 +1027,15 @@
       "INT"
     ],
     [
-      25,
+      26,
+      18,
+      0,
+      17,
+      5,
+      "BOOLEAN"
+    ],
+    [
+      27,
       16,
       1,
       8,
@@ -983,7 +1043,7 @@
       "INT"
     ],
     [
-      26,
+      28,
       17,
       1,
       8,
@@ -991,8 +1051,8 @@
       "INT"
     ],
     [
-      27,
-      18,
+      29,
+      19,
       0,
       10,
       0,
@@ -1004,7 +1064,7 @@
   "extra": {},
   "version": 0.4,
   "state": {
-    "lastLinkId": 27,
-    "lastNodeId": 18
+    "lastLinkId": 29,
+    "lastNodeId": 19
   }
 }

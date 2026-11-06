@@ -75,7 +75,7 @@
         0
       ],
       "upscale_method": "lanczos",
-      "crop": "disabled",
+      "crop": "center",
       "width": [
         "24",
         1
@@ -173,7 +173,7 @@
   "24": {
     "class_type": "ComfyMathExpression",
     "inputs": {
-      "expression": "max(64,round(sqrt(a*b*c/d)/16)*16)",
+      "expression": "a if e else max(64,round(sqrt(a*b*c/d)/16)*16)",
       "values.a": [
         "21",
         0
@@ -189,13 +189,17 @@
       "values.d": [
         "23",
         1
+      ],
+      "values.e": [
+        "26",
+        0
       ]
     }
   },
   "25": {
     "class_type": "ComfyMathExpression",
     "inputs": {
-      "expression": "max(64,round(sqrt(a*b*d/c)/16)*16)",
+      "expression": "b if e else max(64,round(sqrt(a*b*d/c)/16)*16)",
       "values.a": [
         "21",
         0
@@ -211,7 +215,17 @@
       "values.d": [
         "23",
         1
+      ],
+      "values.e": [
+        "26",
+        0
       ]
+    }
+  },
+  "26": {
+    "class_type": "PrimitiveBoolean",
+    "inputs": {
+      "value": false
     }
   }
 }
