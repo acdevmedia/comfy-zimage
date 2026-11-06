@@ -6,7 +6,7 @@ RUN python3 -m pip install --no-cache-dir --upgrade --index-url https://download
 RUN mkdir -p /opt/acdev/ComfyUI && curl -fsSL https://github.com/Comfy-Org/ComfyUI/archive/b5a432157de6b8884f81104cd02926adf4d597e4.tar.gz | tar xz --strip-components=1 -C /opt/acdev/ComfyUI
 RUN python3 -m pip install --no-cache-dir -r /opt/acdev/ComfyUI/requirements.txt 'huggingface_hub==2.3.0'
 RUN apt-get update && apt-get install -y --no-install-recommends zip unzip && rm -rf /var/lib/apt/lists/* && \
-    python3 -m pip install --no-cache-dir 'copyparty==1.20.26' && \
+    python3 -m pip install --no-cache-dir 'copyparty==1.20.26' 'sageattention==1.0.6' && \
     python3 -m venv /opt/awscli && /opt/awscli/bin/pip install --no-cache-dir 'awscli==1.46.3' && ln -s /opt/awscli/bin/aws /usr/local/bin/aws
 COPY scripts /opt/acdev/scripts
 COPY config /opt/acdev/config
@@ -18,6 +18,6 @@ RUN chmod +x /opt/acdev/scripts/*.sh && python3 /opt/acdev/scripts/check-build.p
 ARG VCS_REF=development
 RUN printf '%s\n' "$VCS_REF" > /opt/acdev/image-commit && python3 -m pip freeze > /opt/acdev/python-lock.txt
 ARG STUDIO_VERSION=1
-ENV PYTHONWARNINGS=ignore::FutureWarning PYTHONUNBUFFERED=1 HF_HOME=/workspace/.cache/huggingface STUDIO_VERSION=${STUDIO_VERSION} MODEL_MODE=turbo PORT=8000 PORT_HEALTH=8001
+ENV PYTHONWARNINGS=ignore::FutureWarning PYTHONUNBUFFERED=1 HF_XET_HIGH_PERFORMANCE=1 COMFYUI_ATTENTION=sage HF_HOME=/workspace/.cache/huggingface STUDIO_VERSION=${STUDIO_VERSION} MODEL_MODE=turbo PORT=8000 PORT_HEALTH=8001
 EXPOSE 8188 8000 8001 2222 3923
 ENTRYPOINT ["python3", "/opt/acdev/handler.py", "/opt/acdev/scripts/start.sh"]

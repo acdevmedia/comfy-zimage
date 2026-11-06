@@ -1,6 +1,6 @@
 {
-  "last_node_id": 17,
-  "last_link_id": 26,
+  "last_node_id": 25,
+  "last_link_id": 27,
   "nodes": [
     {
       "id": 1,
@@ -22,7 +22,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            1
+            4
           ],
           "slot_index": 0
         }
@@ -61,7 +61,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            7
+            8
           ],
           "slot_index": 0
         }
@@ -128,8 +128,8 @@
           "name": "VAE",
           "type": "VAE",
           "links": [
-            6,
-            12
+            7,
+            13
           ],
           "slot_index": 0
         }
@@ -167,7 +167,7 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            8
+            9
           ],
           "slot_index": 0
         }
@@ -205,7 +205,7 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            9
+            10
           ],
           "slot_index": 0
         }
@@ -216,6 +216,46 @@
       "widgets_values": [
         "blurry, low resolution, jpeg artifacts, watermark, signature, text overlay, deformed, extra limbs"
       ]
+    },
+    {
+      "id": 20,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        380,
+        300
+      ],
+      "size": [
+        320,
+        120
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "zit_fdpo_v1.safetensors",
+        0.7
+      ],
+      "title": "Photoreal lighting LoRA: strength 0 turns it off"
     },
     {
       "id": 7,
@@ -229,7 +269,7 @@
         120
       ],
       "flags": {},
-      "order": 6,
+      "order": 7,
       "mode": 0,
       "inputs": [],
       "outputs": [
@@ -237,8 +277,8 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            4,
-            16
+            5,
+            17
           ],
           "slot_index": 0
         },
@@ -269,13 +309,13 @@
         120
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
           "name": "image",
           "type": "IMAGE",
-          "link": 4
+          "link": 5
         },
         {
           "name": "width",
@@ -283,7 +323,7 @@
           "widget": {
             "name": "width"
           },
-          "link": 25
+          "link": 26
         },
         {
           "name": "height",
@@ -291,7 +331,7 @@
           "widget": {
             "name": "height"
           },
-          "link": 26
+          "link": 27
         }
       ],
       "outputs": [
@@ -299,7 +339,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            5
+            6
           ],
           "slot_index": 0
         }
@@ -327,18 +367,18 @@
         120
       ],
       "flags": {},
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
           "name": "pixels",
           "type": "IMAGE",
-          "link": 5
+          "link": 6
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 6
+          "link": 7
         }
       ],
       "outputs": [
@@ -346,7 +386,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            10
+            11
           ],
           "slot_index": 0
         }
@@ -368,28 +408,28 @@
         120
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 7
+          "link": 8
         },
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 8
+          "link": 9
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 9
+          "link": 10
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 10
+          "link": 11
         }
       ],
       "outputs": [
@@ -397,7 +437,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            11
+            12
           ],
           "slot_index": 0
         }
@@ -427,18 +467,18 @@
         120
       ],
       "flags": {},
-      "order": 10,
+      "order": 11,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 11
+          "link": 12
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 12
+          "link": 13
         }
       ],
       "outputs": [
@@ -446,7 +486,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            13
+            14
           ],
           "slot_index": 0
         }
@@ -468,13 +508,13 @@
         120
       ],
       "flags": {},
-      "order": 11,
+      "order": 12,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 13
+          "link": 14
         }
       ],
       "outputs": [],
@@ -486,46 +526,12 @@
       ]
     },
     {
-      "id": 13,
+      "id": 21,
       "type": "PrimitiveInt",
       "title": "Render Width",
       "pos": [
         -400,
         0
-      ],
-      "size": [
-        300,
-        110
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            17,
-            21
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "PrimitiveInt"
-      },
-      "widgets_values": [
-        1280,
-        "fixed"
-      ]
-    },
-    {
-      "id": 14,
-      "type": "PrimitiveInt",
-      "title": "Render Height",
-      "pos": [
-        -400,
-        150
       ],
       "size": [
         300,
@@ -549,12 +555,46 @@
         "Node name for S&R": "PrimitiveInt"
       },
       "widgets_values": [
+        1280,
+        "fixed"
+      ]
+    },
+    {
+      "id": 22,
+      "type": "PrimitiveInt",
+      "title": "Render Height",
+      "pos": [
+        -400,
+        150
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            19,
+            23
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
         720,
         "fixed"
       ]
     },
     {
-      "id": 15,
+      "id": 23,
       "type": "GetImageSize",
       "pos": [
         40,
@@ -571,7 +611,7 @@
         {
           "name": "image",
           "type": "IMAGE",
-          "link": 16
+          "link": 17
         }
       ],
       "outputs": [
@@ -579,8 +619,8 @@
           "name": "width",
           "type": "INT",
           "links": [
-            19,
-            23
+            20,
+            24
           ],
           "slot_index": 0
         },
@@ -588,8 +628,8 @@
           "name": "height",
           "type": "INT",
           "links": [
-            20,
-            24
+            21,
+            25
           ],
           "slot_index": 1
         },
@@ -607,7 +647,7 @@
       "widgets_values": []
     },
     {
-      "id": 16,
+      "id": 24,
       "type": "ComfyMathExpression",
       "pos": [
         380,
@@ -632,96 +672,22 @@
         {
           "name": "values.a",
           "type": "FLOAT,INT,BOOLEAN",
-          "link": 17
-        },
-        {
-          "name": "values.b",
-          "type": "FLOAT,INT,BOOLEAN",
           "link": 18
         },
         {
-          "name": "values.c",
+          "name": "values.b",
           "type": "FLOAT,INT,BOOLEAN",
           "link": 19
         },
         {
-          "name": "values.d",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 20
-        }
-      ],
-      "outputs": [
-        {
-          "name": "FLOAT",
-          "type": "FLOAT",
-          "links": null,
-          "slot_index": 0
-        },
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            25
-          ],
-          "slot_index": 1
-        },
-        {
-          "name": "BOOL",
-          "type": "BOOLEAN",
-          "links": null,
-          "slot_index": 2
-        }
-      ],
-      "title": "Fit Frame Width",
-      "properties": {
-        "Node name for S&R": "ComfyMathExpression"
-      },
-      "widgets_values": [
-        "max(64,round(sqrt(a*b*c/d)/16)*16)"
-      ]
-    },
-    {
-      "id": 17,
-      "type": "ComfyMathExpression",
-      "pos": [
-        380,
-        1010
-      ],
-      "size": [
-        320,
-        180
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "expression",
-          "type": "STRING",
-          "link": null,
-          "widget": {
-            "name": "expression"
-          }
-        },
-        {
-          "name": "values.a",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 21
-        },
-        {
-          "name": "values.b",
-          "type": "FLOAT,INT,BOOLEAN",
-          "link": 22
-        },
-        {
           "name": "values.c",
           "type": "FLOAT,INT,BOOLEAN",
-          "link": 23
+          "link": 20
         },
         {
           "name": "values.d",
           "type": "FLOAT,INT,BOOLEAN",
-          "link": 24
+          "link": 21
         }
       ],
       "outputs": [
@@ -746,6 +712,80 @@
           "slot_index": 2
         }
       ],
+      "title": "Fit Frame Width",
+      "properties": {
+        "Node name for S&R": "ComfyMathExpression"
+      },
+      "widgets_values": [
+        "max(64,round(sqrt(a*b*c/d)/16)*16)"
+      ]
+    },
+    {
+      "id": 25,
+      "type": "ComfyMathExpression",
+      "pos": [
+        380,
+        1010
+      ],
+      "size": [
+        320,
+        180
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "expression",
+          "type": "STRING",
+          "link": null,
+          "widget": {
+            "name": "expression"
+          }
+        },
+        {
+          "name": "values.a",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 22
+        },
+        {
+          "name": "values.b",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 23
+        },
+        {
+          "name": "values.c",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 24
+        },
+        {
+          "name": "values.d",
+          "type": "FLOAT,INT,BOOLEAN",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "FLOAT",
+          "type": "FLOAT",
+          "links": null,
+          "slot_index": 0
+        },
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            27
+          ],
+          "slot_index": 1
+        },
+        {
+          "name": "BOOL",
+          "type": "BOOLEAN",
+          "links": null,
+          "slot_index": 2
+        }
+      ],
       "title": "Fit Frame Height",
       "properties": {
         "Node name for S&R": "ComfyMathExpression"
@@ -758,7 +798,7 @@
   "links": [
     [
       1,
-      1,
+      20,
       0,
       2,
       0,
@@ -782,6 +822,14 @@
     ],
     [
       4,
+      1,
+      0,
+      20,
+      0,
+      "MODEL"
+    ],
+    [
+      5,
       7,
       0,
       8,
@@ -789,7 +837,7 @@
       "IMAGE"
     ],
     [
-      5,
+      6,
       8,
       0,
       9,
@@ -797,7 +845,7 @@
       "IMAGE"
     ],
     [
-      6,
+      7,
       4,
       0,
       9,
@@ -805,7 +853,7 @@
       "VAE"
     ],
     [
-      7,
+      8,
       2,
       0,
       10,
@@ -813,7 +861,7 @@
       "MODEL"
     ],
     [
-      8,
+      9,
       5,
       0,
       10,
@@ -821,7 +869,7 @@
       "CONDITIONING"
     ],
     [
-      9,
+      10,
       6,
       0,
       10,
@@ -829,120 +877,120 @@
       "CONDITIONING"
     ],
     [
-      10,
+      11,
       9,
       0,
       10,
       3,
-      "LATENT"
-    ],
-    [
-      11,
-      10,
-      0,
-      11,
-      0,
       "LATENT"
     ],
     [
       12,
-      4,
+      10,
       0,
       11,
-      1,
-      "VAE"
+      0,
+      "LATENT"
     ],
     [
       13,
+      4,
+      0,
+      11,
+      1,
+      "VAE"
+    ],
+    [
+      14,
       11,
       0,
       12,
-      0,
-      "IMAGE"
-    ],
-    [
-      16,
-      7,
-      0,
-      15,
       0,
       "IMAGE"
     ],
     [
       17,
-      13,
+      7,
       0,
-      16,
-      1,
-      "INT"
+      23,
+      0,
+      "IMAGE"
     ],
     [
       18,
-      14,
+      21,
       0,
-      16,
-      2,
+      24,
+      1,
       "INT"
     ],
     [
       19,
-      15,
-      0,
-      16,
-      3,
-      "INT"
-    ],
-    [
-      20,
-      15,
-      1,
-      16,
-      4,
-      "INT"
-    ],
-    [
-      21,
-      13,
-      0,
-      17,
-      1,
-      "INT"
-    ],
-    [
       22,
-      14,
       0,
-      17,
+      24,
       2,
       "INT"
     ],
     [
+      20,
       23,
-      15,
       0,
-      17,
+      24,
       3,
       "INT"
     ],
     [
-      24,
-      15,
+      21,
+      23,
       1,
-      17,
+      24,
       4,
       "INT"
     ],
     [
+      22,
+      21,
+      0,
       25,
-      16,
+      1,
+      "INT"
+    ],
+    [
+      23,
+      22,
+      0,
+      25,
+      2,
+      "INT"
+    ],
+    [
+      24,
+      23,
+      0,
+      25,
+      3,
+      "INT"
+    ],
+    [
+      25,
+      23,
+      1,
+      25,
+      4,
+      "INT"
+    ],
+    [
+      26,
+      24,
       1,
       8,
       1,
       "INT"
     ],
     [
-      26,
-      17,
+      27,
+      25,
       1,
       8,
       2,
@@ -954,7 +1002,7 @@
   "extra": {},
   "version": 0.4,
   "state": {
-    "lastLinkId": 15,
-    "lastNodeId": 14
+    "lastLinkId": 16,
+    "lastNodeId": 22
   }
 }

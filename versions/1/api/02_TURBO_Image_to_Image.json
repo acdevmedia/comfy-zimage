@@ -10,7 +10,7 @@
     "class_type": "ModelSamplingAuraFlow",
     "inputs": {
       "model": [
-        "1",
+        "20",
         0
       ],
       "shift": 3.0
@@ -50,6 +50,17 @@
       "text": "blurry, low resolution, jpeg artifacts, watermark, signature, text overlay, deformed, extra limbs"
     }
   },
+  "20": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "lora_name": "zit_fdpo_v1.safetensors",
+      "strength_model": 0.7
+    }
+  },
   "7": {
     "class_type": "LoadImage",
     "inputs": {
@@ -66,11 +77,11 @@
       "upscale_method": "lanczos",
       "crop": "disabled",
       "width": [
-        "16",
+        "24",
         1
       ],
       "height": [
-        "17",
+        "25",
         1
       ]
     }
@@ -138,19 +149,19 @@
       "filename_prefix": "ZImage/turbo"
     }
   },
-  "13": {
+  "21": {
     "class_type": "PrimitiveInt",
     "inputs": {
       "value": 1280
     }
   },
-  "14": {
+  "22": {
     "class_type": "PrimitiveInt",
     "inputs": {
       "value": 720
     }
   },
-  "15": {
+  "23": {
     "class_type": "GetImageSize",
     "inputs": {
       "image": [
@@ -159,46 +170,46 @@
       ]
     }
   },
-  "16": {
+  "24": {
     "class_type": "ComfyMathExpression",
     "inputs": {
       "expression": "max(64,round(sqrt(a*b*c/d)/16)*16)",
       "values.a": [
-        "13",
+        "21",
         0
       ],
       "values.b": [
-        "14",
+        "22",
         0
       ],
       "values.c": [
-        "15",
+        "23",
         0
       ],
       "values.d": [
-        "15",
+        "23",
         1
       ]
     }
   },
-  "17": {
+  "25": {
     "class_type": "ComfyMathExpression",
     "inputs": {
       "expression": "max(64,round(sqrt(a*b*d/c)/16)*16)",
       "values.a": [
-        "13",
+        "21",
         0
       ],
       "values.b": [
-        "14",
+        "22",
         0
       ],
       "values.c": [
-        "15",
+        "23",
         0
       ],
       "values.d": [
-        "15",
+        "23",
         1
       ]
     }

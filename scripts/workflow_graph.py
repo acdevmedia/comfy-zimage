@@ -96,5 +96,24 @@ def check(api, ui):
     return True
 
 
+def add_draft_cache(ui, source, target):
+    """Insert EasyCache between two nodes, bypassed: select it and press Ctrl+B for faster, softer drafts."""
+    link = next(l for l in ui['links'] if l[1] == source and l[3] == target and l[5] == 'MODEL')
+    node_id, new_link = ui['last_node_id'] + 1, ui['last_link_id'] + 1
+    slot = link[4]
+    by_id = {n['id']: n for n in ui['nodes']}
+    x, y = by_id[target]['pos']
+    ui['nodes'].append({'id': node_id, 'type': 'EasyCache', 'title': 'Draft mode: select and press Ctrl+B', 'pos': [x, y - 170],
+                        'size': [320, 130], 'flags': {}, 'order': 0, 'mode': 4,
+                        'inputs': [{'name': 'model', 'type': 'MODEL', 'link': link[0]}],
+                        'outputs': [{'name': 'MODEL', 'type': 'MODEL', 'links': [new_link], 'slot_index': 0}],
+                        'properties': {'Node name for S&R': 'EasyCache'}, 'widgets_values': [0.2, 0.15, 0.95, False]})
+    link[3], link[4] = node_id, 0
+    ui['links'].append([new_link, node_id, 0, target, slot, 'MODEL'])
+    by_id[target]['inputs'][slot]['link'] = new_link
+    ui['last_node_id'], ui['last_link_id'] = node_id, new_link
+    ui.setdefault('state', {}).update(lastNodeId=node_id, lastLinkId=new_link)
+
+
 def dump(path, obj):
     path.write_text(json.dumps(obj, indent=2) + '\n')

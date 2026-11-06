@@ -10,8 +10,9 @@ CLIP = 'qwen_3_4b.safetensors'
 VAE = 'ae.safetensors'
 # Turbo is the distilled 8-step model at CFG 1.0; base is the 25-step model at CFG 4.0. Both follow
 # the upstream templates: res_multistep with the simple schedule and an AuraFlow shift of 3.
+LIGHTING = 'zit_fdpo_v1.safetensors'
 VARIANTS = {
-    'TURBO': dict(unet='z_image_turbo_bf16.safetensors', steps=8, cfg=1.0, prefix='ZImage/turbo'),
+    'TURBO': dict(unet='z_image_turbo_bf16.safetensors', steps=8, cfg=1.0, prefix='ZImage/turbo', lora=0.7),
     'BASE': dict(unet='z_image_bf16.safetensors', steps=25, cfg=4.0, prefix='ZImage/base'),
 }
 PROMPT = ('A cinematic wide shot of a lighthouse on a rocky headland at dusk, long exposure sea, '
@@ -24,12 +25,16 @@ def spec(variant, img2img):
     v = VARIANTS[variant]
     prompt = EDIT_PROMPT if img2img else PROMPT
     s = [('1', 'UNETLoader', {'unet_name': v['unet'], 'weight_dtype': 'default'}, [v['unet'], 'default'], (40, 40)),
-         ('2', 'ModelSamplingAuraFlow', {'model': ['1', 0], 'shift': 3.0}, [3.0], (380, 40)),
+         ('2', 'ModelSamplingAuraFlow', {'model': ['20' if 'lora' in v else '1', 0], 'shift': 3.0}, [3.0], (380, 40)),
          ('3', 'CLIPLoader', {'clip_name': CLIP, 'type': 'lumina2', 'device': 'default'},
           [CLIP, 'lumina2', 'default'], (40, 180)),
          ('4', 'VAELoader', {'vae_name': VAE}, [VAE], (40, 320)),
          ('5', 'CLIPTextEncode', {'clip': ['3', 0], 'text': prompt}, [prompt], (380, 180)),
          ('6', 'CLIPTextEncode', {'clip': ['3', 0], 'text': NEG}, [NEG], (380, 340))]
+    if 'lora' in v:
+        # Flow-DPO lifts the flat, plastic light of the 8-step model. Set strength to 0 to turn it off.
+        s.append(('20', 'LoraLoaderModelOnly', {'model': ['1', 0], 'lora_name': LIGHTING, 'strength_model': v['lora']},
+                  [LIGHTING, v['lora']], (380, 300)))
     if img2img:
         # Scale the source first: an unbounded upload would otherwise encode a latent of any size.
         s += [('7', 'LoadImage', {'image': 'upload_your_image.png'}, ['upload_your_image.png', 'image'], (40, 480)),
@@ -59,6 +64,11 @@ def main():
         sync_api(api,ui)
         fit_frame_to_image(api, ui, 16)
         g.check(api, ui)
+        for node in ui['nodes']:
+            if node['id'] == 20:
+                node['title'] = 'Photoreal lighting LoRA: strength 0 turns it off'
+        if variant == 'BASE':
+            g.add_draft_cache(ui, 2, 10)
         name = '%s_%s_%s.json' % (num, variant, label)
         g.dump(ROOT / 'versions/1/api' / name, api)
         g.dump(ROOT / 'versions/1/workflows' / name, ui)

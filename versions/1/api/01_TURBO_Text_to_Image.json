@@ -10,7 +10,7 @@
     "class_type": "ModelSamplingAuraFlow",
     "inputs": {
       "model": [
-        "1",
+        "20",
         0
       ],
       "shift": 3.0
@@ -50,15 +50,26 @@
       "text": "blurry, low resolution, jpeg artifacts, watermark, signature, text overlay, deformed, extra limbs"
     }
   },
+  "20": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "model": [
+        "1",
+        0
+      ],
+      "lora_name": "zit_fdpo_v1.safetensors",
+      "strength_model": 0.7
+    }
+  },
   "9": {
     "class_type": "EmptySD3LatentImage",
     "inputs": {
       "width": [
-        "13",
+        "21",
         0
       ],
       "height": [
-        "14",
+        "22",
         0
       ],
       "batch_size": 1
@@ -114,13 +125,13 @@
       "filename_prefix": "ZImage/turbo"
     }
   },
-  "13": {
+  "21": {
     "class_type": "PrimitiveInt",
     "inputs": {
       "value": 1280
     }
   },
-  "14": {
+  "22": {
     "class_type": "PrimitiveInt",
     "inputs": {
       "value": 720

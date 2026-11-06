@@ -1,6 +1,6 @@
 {
-  "last_node_id": 17,
-  "last_link_id": 26,
+  "last_node_id": 18,
+  "last_link_id": 27,
   "nodes": [
     {
       "id": 1,
@@ -374,7 +374,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 7
+          "link": 27
         },
         {
           "name": "positive",
@@ -753,6 +753,48 @@
       "widgets_values": [
         "max(64,round(sqrt(a*b*d/c)/16)*16)"
       ]
+    },
+    {
+      "id": 18,
+      "type": "EasyCache",
+      "title": "Draft mode: select and press Ctrl+B",
+      "pos": [
+        1060,
+        10
+      ],
+      "size": [
+        320,
+        130
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            27
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EasyCache"
+      },
+      "widgets_values": [
+        0.2,
+        0.15,
+        0.95,
+        false
+      ]
     }
   ],
   "links": [
@@ -808,7 +850,7 @@
       7,
       2,
       0,
-      10,
+      18,
       0,
       "MODEL"
     ],
@@ -947,6 +989,14 @@
       8,
       2,
       "INT"
+    ],
+    [
+      27,
+      18,
+      0,
+      10,
+      0,
+      "MODEL"
     ]
   ],
   "groups": [],
@@ -954,7 +1004,7 @@
   "extra": {},
   "version": 0.4,
   "state": {
-    "lastLinkId": 15,
-    "lastNodeId": 14
+    "lastLinkId": 27,
+    "lastNodeId": 18
   }
 }

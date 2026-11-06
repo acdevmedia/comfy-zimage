@@ -1,6 +1,6 @@
 {
-  "last_node_id": 14,
-  "last_link_id": 12,
+  "last_node_id": 22,
+  "last_link_id": 13,
   "nodes": [
     {
       "id": 1,
@@ -22,7 +22,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            1
+            4
           ],
           "slot_index": 0
         }
@@ -61,7 +61,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            4
+            5
           ],
           "slot_index": 0
         }
@@ -128,7 +128,7 @@
           "name": "VAE",
           "type": "VAE",
           "links": [
-            9
+            10
           ],
           "slot_index": 0
         }
@@ -166,7 +166,7 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            5
+            6
           ],
           "slot_index": 0
         }
@@ -204,7 +204,7 @@
           "name": "CONDITIONING",
           "type": "CONDITIONING",
           "links": [
-            6
+            7
           ],
           "slot_index": 0
         }
@@ -215,6 +215,46 @@
       "widgets_values": [
         "blurry, low resolution, jpeg artifacts, watermark, signature, text overlay, deformed, extra limbs"
       ]
+    },
+    {
+      "id": 20,
+      "type": "LoraLoaderModelOnly",
+      "pos": [
+        380,
+        300
+      ],
+      "size": [
+        320,
+        120
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoraLoaderModelOnly"
+      },
+      "widgets_values": [
+        "zit_fdpo_v1.safetensors",
+        0.7
+      ],
+      "title": "Photoreal lighting LoRA: strength 0 turns it off"
     },
     {
       "id": 9,
@@ -228,7 +268,7 @@
         120
       ],
       "flags": {},
-      "order": 6,
+      "order": 7,
       "mode": 0,
       "inputs": [
         {
@@ -237,7 +277,7 @@
           "widget": {
             "name": "width"
           },
-          "link": 11
+          "link": 12
         },
         {
           "name": "height",
@@ -245,7 +285,7 @@
           "widget": {
             "name": "height"
           },
-          "link": 12
+          "link": 13
         }
       ],
       "outputs": [
@@ -253,7 +293,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            7
+            8
           ],
           "slot_index": 0
         }
@@ -279,28 +319,28 @@
         120
       ],
       "flags": {},
-      "order": 7,
+      "order": 8,
       "mode": 0,
       "inputs": [
         {
           "name": "model",
           "type": "MODEL",
-          "link": 4
+          "link": 5
         },
         {
           "name": "positive",
           "type": "CONDITIONING",
-          "link": 5
+          "link": 6
         },
         {
           "name": "negative",
           "type": "CONDITIONING",
-          "link": 6
+          "link": 7
         },
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 7
+          "link": 8
         }
       ],
       "outputs": [
@@ -308,7 +348,7 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            8
+            9
           ],
           "slot_index": 0
         }
@@ -338,18 +378,18 @@
         120
       ],
       "flags": {},
-      "order": 8,
+      "order": 9,
       "mode": 0,
       "inputs": [
         {
           "name": "samples",
           "type": "LATENT",
-          "link": 8
+          "link": 9
         },
         {
           "name": "vae",
           "type": "VAE",
-          "link": 9
+          "link": 10
         }
       ],
       "outputs": [
@@ -357,7 +397,7 @@
           "name": "IMAGE",
           "type": "IMAGE",
           "links": [
-            10
+            11
           ],
           "slot_index": 0
         }
@@ -379,13 +419,13 @@
         120
       ],
       "flags": {},
-      "order": 9,
+      "order": 10,
       "mode": 0,
       "inputs": [
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 10
+          "link": 11
         }
       ],
       "outputs": [],
@@ -397,45 +437,12 @@
       ]
     },
     {
-      "id": 13,
+      "id": 21,
       "type": "PrimitiveInt",
       "title": "Render Width",
       "pos": [
         -400,
         0
-      ],
-      "size": [
-        300,
-        110
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "INT",
-          "type": "INT",
-          "links": [
-            11
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "PrimitiveInt"
-      },
-      "widgets_values": [
-        1280,
-        "fixed"
-      ]
-    },
-    {
-      "id": 14,
-      "type": "PrimitiveInt",
-      "title": "Render Height",
-      "pos": [
-        -400,
-        150
       ],
       "size": [
         300,
@@ -458,6 +465,39 @@
         "Node name for S&R": "PrimitiveInt"
       },
       "widgets_values": [
+        1280,
+        "fixed"
+      ]
+    },
+    {
+      "id": 22,
+      "type": "PrimitiveInt",
+      "title": "Render Height",
+      "pos": [
+        -400,
+        150
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
         720,
         "fixed"
       ]
@@ -466,7 +506,7 @@
   "links": [
     [
       1,
-      1,
+      20,
       0,
       2,
       0,
@@ -490,6 +530,14 @@
     ],
     [
       4,
+      1,
+      0,
+      20,
+      0,
+      "MODEL"
+    ],
+    [
+      5,
       2,
       0,
       10,
@@ -497,7 +545,7 @@
       "MODEL"
     ],
     [
-      5,
+      6,
       5,
       0,
       10,
@@ -505,7 +553,7 @@
       "CONDITIONING"
     ],
     [
-      6,
+      7,
       6,
       0,
       10,
@@ -513,7 +561,7 @@
       "CONDITIONING"
     ],
     [
-      7,
+      8,
       9,
       0,
       10,
@@ -521,7 +569,7 @@
       "LATENT"
     ],
     [
-      8,
+      9,
       10,
       0,
       11,
@@ -529,7 +577,7 @@
       "LATENT"
     ],
     [
-      9,
+      10,
       4,
       0,
       11,
@@ -537,7 +585,7 @@
       "VAE"
     ],
     [
-      10,
+      11,
       11,
       0,
       12,
@@ -545,16 +593,16 @@
       "IMAGE"
     ],
     [
-      11,
-      13,
+      12,
+      21,
       0,
       9,
       0,
       "INT"
     ],
     [
-      12,
-      14,
+      13,
+      22,
       0,
       9,
       1,
@@ -566,7 +614,7 @@
   "extra": {},
   "version": 0.4,
   "state": {
-    "lastLinkId": 12,
-    "lastNodeId": 14
+    "lastLinkId": 13,
+    "lastNodeId": 22
   }
 }
