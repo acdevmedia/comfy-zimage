@@ -1,6 +1,6 @@
 {
-  "last_node_id": 12,
-  "last_link_id": 10,
+  "last_node_id": 14,
+  "last_link_id": 12,
   "nodes": [
     {
       "id": 1,
@@ -230,7 +230,24 @@
       "flags": {},
       "order": 6,
       "mode": 0,
-      "inputs": [],
+      "inputs": [
+        {
+          "name": "width",
+          "type": "INT",
+          "widget": {
+            "name": "width"
+          },
+          "link": 11
+        },
+        {
+          "name": "height",
+          "type": "INT",
+          "widget": {
+            "name": "height"
+          },
+          "link": 12
+        }
+      ],
       "outputs": [
         {
           "name": "LATENT",
@@ -378,6 +395,72 @@
       "widgets_values": [
         "ZImage/base"
       ]
+    },
+    {
+      "id": 13,
+      "type": "PrimitiveInt",
+      "title": "Render Width",
+      "pos": [
+        -400,
+        0
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
+        1280,
+        "fixed"
+      ]
+    },
+    {
+      "id": 14,
+      "type": "PrimitiveInt",
+      "title": "Render Height",
+      "pos": [
+        -400,
+        150
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
+        720,
+        "fixed"
+      ]
     }
   ],
   "links": [
@@ -460,10 +543,30 @@
       12,
       0,
       "IMAGE"
+    ],
+    [
+      11,
+      13,
+      0,
+      9,
+      0,
+      "INT"
+    ],
+    [
+      12,
+      14,
+      0,
+      9,
+      1,
+      "INT"
     ]
   ],
   "groups": [],
   "config": {},
   "extra": {},
-  "version": 0.4
+  "version": 0.4,
+  "state": {
+    "lastLinkId": 12,
+    "lastNodeId": 14
+  }
 }

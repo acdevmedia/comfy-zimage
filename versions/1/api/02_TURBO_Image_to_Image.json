@@ -57,15 +57,22 @@
     }
   },
   "8": {
-    "class_type": "ImageScaleToTotalPixels",
+    "class_type": "ImageScale",
     "inputs": {
       "image": [
         "7",
         0
       ],
       "upscale_method": "lanczos",
-      "megapixels": 1.0,
-      "resolution_steps": 16
+      "crop": "center",
+      "width": [
+        "13",
+        0
+      ],
+      "height": [
+        "14",
+        0
+      ]
     }
   },
   "9": {
@@ -129,6 +136,18 @@
         0
       ],
       "filename_prefix": "ZImage/turbo"
+    }
+  },
+  "13": {
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": 1280
+    }
+  },
+  "14": {
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": 720
     }
   }
 }

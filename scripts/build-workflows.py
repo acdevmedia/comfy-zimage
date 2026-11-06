@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import workflow_graph as g
+from workflow_dimensions import apply_dimensions, sync_api
 
 ROOT = Path(__file__).resolve().parents[1]
 CLIP = 'qwen_3_4b.safetensors'
@@ -54,6 +55,8 @@ def main():
             ('03', 'BASE', False, 'Text_to_Image'), ('04', 'BASE', True, 'Image_to_Image')]
     for num, variant, img2img, label in plan:
         api, ui = g.build(spec(variant, img2img))
+        apply_dimensions(ui)
+        sync_api(api,ui)
         g.check(api, ui)
         name = '%s_%s_%s.json' % (num, variant, label)
         g.dump(ROOT / 'versions/1/api' / name, api)

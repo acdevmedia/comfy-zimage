@@ -1,8 +1,8 @@
 {
   "id": "9ae6082b-c7f4-433c-9971-7a8f65a3ea65",
   "revision": 0,
-  "last_node_id": 61,
-  "last_link_id": 75,
+  "last_node_id": 59,
+  "last_link_id": 79,
   "nodes": [
     {
       "id": 35,
@@ -91,6 +91,18 @@
             "name": "text"
           },
           "link": null
+        },
+        {
+          "name": "render_width",
+          "label": "Render Width",
+          "type": "INT",
+          "link": 77
+        },
+        {
+          "name": "render_height",
+          "label": "Render Height",
+          "type": "INT",
+          "link": 79
         }
       ],
       "outputs": [
@@ -152,6 +164,72 @@
         "secondTabWidth": 65
       },
       "widgets_values": []
+    },
+    {
+      "id": 58,
+      "type": "PrimitiveInt",
+      "title": "Render Width",
+      "pos": [
+        -400,
+        0
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            77
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
+        1024,
+        "fixed"
+      ]
+    },
+    {
+      "id": 59,
+      "type": "PrimitiveInt",
+      "title": "Render Height",
+      "pos": [
+        -400,
+        150
+      ],
+      "size": [
+        300,
+        110
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "INT",
+          "type": "INT",
+          "links": [
+            79
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PrimitiveInt"
+      },
+      "widgets_values": [
+        1024,
+        "fixed"
+      ]
     }
   ],
   "links": [
@@ -162,6 +240,22 @@
       9,
       0,
       "IMAGE"
+    ],
+    [
+      77,
+      58,
+      0,
+      57,
+      1,
+      "INT"
+    ],
+    [
+      79,
+      59,
+      0,
+      57,
+      2,
+      "INT"
     ]
   ],
   "groups": [],
@@ -173,7 +267,7 @@
         "state": {
           "lastGroupId": 4,
           "lastNodeId": 61,
-          "lastLinkId": 75,
+          "lastLinkId": 78,
           "lastRerouteId": 0
         },
         "revision": 0,
@@ -215,9 +309,7 @@
             "id": "dd780b3c-23e9-46ff-8469-156008f42e5a",
             "name": "width",
             "type": "INT",
-            "linkIds": [
-              35
-            ],
+            "linkIds": [],
             "pos": [
               -460,
               520
@@ -227,9 +319,7 @@
             "id": "7b08d546-6bb0-4ef9-82e9-ffae5e1ee6bc",
             "name": "height",
             "type": "INT",
-            "linkIds": [
-              36
-            ],
+            "linkIds": [],
             "pos": [
               -460,
               540
@@ -293,6 +383,32 @@
             "pos": [
               -460,
               640
+            ]
+          },
+          {
+            "id": "7710675d-2d86-5bb0-ba1d-361a0858207a",
+            "name": "render_width",
+            "label": "Render Width",
+            "type": "INT",
+            "linkIds": [
+              76
+            ],
+            "pos": [
+              0,
+              160
+            ]
+          },
+          {
+            "id": "25407d95-061f-5550-94f5-ca3e83cb5fa0",
+            "name": "render_height",
+            "label": "Render Height",
+            "type": "INT",
+            "linkIds": [
+              78
+            ],
+            "pos": [
+              0,
+              180
             ]
           }
         ],
@@ -669,7 +785,7 @@
                 "widget": {
                   "name": "width"
                 },
-                "link": 35
+                "link": 76
               },
               {
                 "localized_name": "height",
@@ -678,7 +794,7 @@
                 "widget": {
                   "name": "height"
                 },
-                "link": 36
+                "link": 78
               }
             ],
             "outputs": [
@@ -982,22 +1098,6 @@
             "type": "STRING"
           },
           {
-            "id": 35,
-            "origin_id": -10,
-            "origin_slot": 1,
-            "target_id": 13,
-            "target_slot": 0,
-            "type": "INT"
-          },
-          {
-            "id": 36,
-            "origin_id": -10,
-            "origin_slot": 2,
-            "target_id": 13,
-            "target_slot": 1,
-            "type": "INT"
-          },
-          {
             "id": 71,
             "origin_id": -10,
             "origin_slot": 3,
@@ -1036,6 +1136,22 @@
             "target_id": 29,
             "target_slot": 0,
             "type": "COMBO"
+          },
+          {
+            "id": 76,
+            "origin_id": -10,
+            "origin_slot": 8,
+            "target_id": 13,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 78,
+            "origin_id": -10,
+            "origin_slot": 9,
+            "target_id": 13,
+            "target_slot": 1,
+            "type": "INT"
           }
         ],
         "extra": {
@@ -1060,5 +1176,9 @@
     "VHS_MetadataImage": true,
     "VHS_KeepIntermediate": true
   },
-  "version": 0.4
+  "version": 0.4,
+  "state": {
+    "lastLinkId": 79,
+    "lastNodeId": 59
+  }
 }

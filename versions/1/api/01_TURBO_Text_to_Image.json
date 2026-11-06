@@ -53,8 +53,14 @@
   "9": {
     "class_type": "EmptySD3LatentImage",
     "inputs": {
-      "width": 1280,
-      "height": 720,
+      "width": [
+        "13",
+        0
+      ],
+      "height": [
+        "14",
+        0
+      ],
       "batch_size": 1
     }
   },
@@ -106,6 +112,18 @@
         0
       ],
       "filename_prefix": "ZImage/turbo"
+    }
+  },
+  "13": {
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": 1280
+    }
+  },
+  "14": {
+    "class_type": "PrimitiveInt",
+    "inputs": {
+      "value": 720
     }
   }
 }

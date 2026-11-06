@@ -70,7 +70,7 @@
           "widget": {
             "name": "width_1"
           },
-          "link": 134
+          "link": null
         },
         {
           "label": "height",
@@ -79,7 +79,7 @@
           "widget": {
             "name": "height_1"
           },
-          "link": 135
+          "link": null
         },
         {
           "label": "steps",
@@ -220,46 +220,6 @@
       "bgcolor": "#000"
     },
     {
-      "id": 94,
-      "type": "ResolutionSelector",
-      "pos": [
-        -20,
-        290
-      ],
-      "size": [
-        270,
-        190
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "links": [
-            134
-          ]
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "links": [
-            135
-          ]
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ResolutionSelector"
-      },
-      "widgets_values": [
-        "1:1 (Square)",
-        1,
-        8
-      ]
-    },
-    {
       "id": 95,
       "type": "SaveImageAdvanced",
       "pos": [
@@ -306,22 +266,6 @@
       95,
       0,
       "IMAGE"
-    ],
-    [
-      134,
-      94,
-      0,
-      76,
-      2,
-      "INT"
-    ],
-    [
-      135,
-      94,
-      1,
-      76,
-      3,
-      "INT"
     ]
   ],
   "groups": [],
