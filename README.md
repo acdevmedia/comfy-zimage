@@ -84,3 +84,7 @@ Confirm build and GPU status in Actions before treating a revision as tested; `d
 ## Attribution
 
 Model weights: [Tongyi-MAI/Z-Image-Turbo](https://huggingface.co/Tongyi-MAI/Z-Image-Turbo) and [Tongyi-MAI/Z-Image](https://huggingface.co/Tongyi-MAI/Z-Image), packaged for ComfyUI by [Comfy-Org](https://huggingface.co/Comfy-Org/Z-Image-Turbo). The advanced workflows are Comfy-Org's upstream templates. Check the model licence before commercial use.
+
+## CPU thread sizing
+
+CPU thread pools are sized automatically to the container CPU quota and available CPUs before PyTorch starts, avoiding host-sized pools that can throttle image scaling and export. Set `OMP_NUM_THREADS` and optionally `MKL_NUM_THREADS` to override; startup logs show the selected values. Actual speedup depends on the workload and has not been benchmarked for this revision.
