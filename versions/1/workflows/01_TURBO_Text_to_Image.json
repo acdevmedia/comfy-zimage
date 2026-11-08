@@ -1,151 +1,13 @@
 {
-  "last_node_id": 22,
-  "last_link_id": 13,
+  "last_node_id": 23,
+  "last_link_id": 24,
   "nodes": [
-    {
-      "id": 1,
-      "type": "UNETLoader",
-      "pos": [
-        40,
-        40
-      ],
-      "size": [
-        320,
-        120
-      ],
-      "flags": {},
-      "order": 0,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            4
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "UNETLoader"
-      },
-      "widgets_values": [
-        "z_image_turbo_bf16.safetensors",
-        "default"
-      ]
-    },
-    {
-      "id": 2,
-      "type": "ModelSamplingAuraFlow",
-      "pos": [
-        380,
-        40
-      ],
-      "size": [
-        320,
-        120
-      ],
-      "flags": {},
-      "order": 1,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "model",
-          "type": "MODEL",
-          "link": 1
-        }
-      ],
-      "outputs": [
-        {
-          "name": "MODEL",
-          "type": "MODEL",
-          "links": [
-            5
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "ModelSamplingAuraFlow"
-      },
-      "widgets_values": [
-        3.0
-      ]
-    },
-    {
-      "id": 3,
-      "type": "CLIPLoader",
-      "pos": [
-        40,
-        180
-      ],
-      "size": [
-        320,
-        120
-      ],
-      "flags": {},
-      "order": 2,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "CLIP",
-          "type": "CLIP",
-          "links": [
-            2,
-            3
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "CLIPLoader"
-      },
-      "widgets_values": [
-        "qwen_3_4b.safetensors",
-        "lumina2",
-        "default"
-      ]
-    },
-    {
-      "id": 4,
-      "type": "VAELoader",
-      "pos": [
-        40,
-        320
-      ],
-      "size": [
-        320,
-        120
-      ],
-      "flags": {},
-      "order": 3,
-      "mode": 0,
-      "inputs": [],
-      "outputs": [
-        {
-          "name": "VAE",
-          "type": "VAE",
-          "links": [
-            10
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VAELoader"
-      },
-      "widgets_values": [
-        "ae.safetensors"
-      ]
-    },
     {
       "id": 5,
       "type": "CLIPTextEncode",
       "pos": [
-        380,
-        180
+        0,
+        0
       ],
       "size": [
         320,
@@ -158,7 +20,7 @@
         {
           "name": "clip",
           "type": "CLIP",
-          "link": 2
+          "link": 18
         }
       ],
       "outputs": [
@@ -182,7 +44,7 @@
       "id": 6,
       "type": "CLIPTextEncode",
       "pos": [
-        380,
+        0,
         340
       ],
       "size": [
@@ -196,7 +58,7 @@
         {
           "name": "clip",
           "type": "CLIP",
-          "link": 3
+          "link": 19
         }
       ],
       "outputs": [
@@ -220,8 +82,8 @@
       "id": 20,
       "type": "LoraLoaderModelOnly",
       "pos": [
-        380,
-        300
+        0,
+        680
       ],
       "size": [
         320,
@@ -234,7 +96,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 4
+          "link": 20
         }
       ],
       "outputs": [
@@ -242,7 +104,7 @@
           "name": "MODEL",
           "type": "MODEL",
           "links": [
-            1
+            14
           ],
           "slot_index": 0
         }
@@ -257,62 +119,11 @@
       "title": "Photoreal lighting LoRA: strength 0 turns it off"
     },
     {
-      "id": 9,
-      "type": "EmptySD3LatentImage",
-      "pos": [
-        720,
-        480
-      ],
-      "size": [
-        320,
-        120
-      ],
-      "flags": {},
-      "order": 7,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "width",
-          "type": "INT",
-          "widget": {
-            "name": "width"
-          },
-          "link": 12
-        },
-        {
-          "name": "height",
-          "type": "INT",
-          "widget": {
-            "name": "height"
-          },
-          "link": 13
-        }
-      ],
-      "outputs": [
-        {
-          "name": "LATENT",
-          "type": "LATENT",
-          "links": [
-            8
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "EmptySD3LatentImage"
-      },
-      "widgets_values": [
-        1280,
-        720,
-        1
-      ]
-    },
-    {
       "id": 10,
       "type": "KSampler",
       "pos": [
-        1060,
-        180
+        0,
+        1020
       ],
       "size": [
         320,
@@ -325,7 +136,7 @@
         {
           "name": "model",
           "type": "MODEL",
-          "link": 5
+          "link": 21
         },
         {
           "name": "positive",
@@ -340,7 +151,7 @@
         {
           "name": "latent_image",
           "type": "LATENT",
-          "link": 8
+          "link": 22
         }
       ],
       "outputs": [
@@ -348,13 +159,16 @@
           "name": "LATENT",
           "type": "LATENT",
           "links": [
-            9
+            15
           ],
           "slot_index": 0
         }
       ],
       "properties": {
-        "Node name for S&R": "KSampler"
+        "Node name for S&R": "KSampler",
+        "acdevSeedModes": {
+          "seed": "randomize"
+        }
       },
       "widgets_values": [
         0,
@@ -367,52 +181,11 @@
       ]
     },
     {
-      "id": 11,
-      "type": "VAEDecode",
-      "pos": [
-        1400,
-        180
-      ],
-      "size": [
-        320,
-        120
-      ],
-      "flags": {},
-      "order": 9,
-      "mode": 0,
-      "inputs": [
-        {
-          "name": "samples",
-          "type": "LATENT",
-          "link": 9
-        },
-        {
-          "name": "vae",
-          "type": "VAE",
-          "link": 10
-        }
-      ],
-      "outputs": [
-        {
-          "name": "IMAGE",
-          "type": "IMAGE",
-          "links": [
-            11
-          ],
-          "slot_index": 0
-        }
-      ],
-      "properties": {
-        "Node name for S&R": "VAEDecode"
-      },
-      "widgets_values": []
-    },
-    {
       "id": 12,
       "type": "SaveImage",
       "pos": [
-        1560,
-        180
+        1060,
+        0
       ],
       "size": [
         320,
@@ -425,7 +198,7 @@
         {
           "name": "images",
           "type": "IMAGE",
-          "link": 11
+          "link": 23
         }
       ],
       "outputs": [],
@@ -441,8 +214,8 @@
       "type": "PrimitiveInt",
       "title": "Render Width",
       "pos": [
-        -400,
-        0
+        0,
+        1360
       ],
       "size": [
         300,
@@ -457,7 +230,7 @@
           "name": "INT",
           "type": "INT",
           "links": [
-            12
+            16
           ]
         }
       ],
@@ -474,8 +247,8 @@
       "type": "PrimitiveInt",
       "title": "Render Height",
       "pos": [
-        -400,
-        150
+        0,
+        1700
       ],
       "size": [
         300,
@@ -490,7 +263,7 @@
           "name": "INT",
           "type": "INT",
           "links": [
-            13
+            17
           ]
         }
       ],
@@ -501,49 +274,111 @@
         720,
         "fixed"
       ]
+    },
+    {
+      "id": 23,
+      "type": "04484b9b-f41e-52e3-8093-39e8960f3535",
+      "pos": [
+        420,
+        0
+      ],
+      "size": [
+        560,
+        240
+      ],
+      "flags": {
+        "collapsed": true
+      },
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "Photoreal lighting LoRA: strength 0 turns it off",
+          "localized_name": "model",
+          "name": "model",
+          "type": "MODEL",
+          "link": 14
+        },
+        {
+          "label": "KSampler",
+          "localized_name": "samples",
+          "name": "samples",
+          "type": "LATENT",
+          "link": 15
+        },
+        {
+          "label": "Render Width",
+          "localized_name": "width",
+          "name": "width",
+          "type": "INT",
+          "link": 16
+        },
+        {
+          "label": "Render Height",
+          "localized_name": "height",
+          "name": "height",
+          "type": "INT",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "label": "CLIP",
+          "localized_name": "CLIP",
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            18,
+            19
+          ]
+        },
+        {
+          "label": "MODEL",
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            20
+          ]
+        },
+        {
+          "label": "MODEL",
+          "localized_name": "MODEL",
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            21
+          ]
+        },
+        {
+          "label": "LATENT",
+          "localized_name": "LATENT",
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            22
+          ]
+        },
+        {
+          "label": "IMAGE",
+          "localized_name": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            23
+          ]
+        }
+      ],
+      "title": "Model internals",
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.39.0"
+      },
+      "widgets_values": [],
+      "widgets_values_named": {}
     }
   ],
   "links": [
-    [
-      1,
-      20,
-      0,
-      2,
-      0,
-      "MODEL"
-    ],
-    [
-      2,
-      3,
-      0,
-      5,
-      0,
-      "CLIP"
-    ],
-    [
-      3,
-      3,
-      0,
-      6,
-      0,
-      "CLIP"
-    ],
-    [
-      4,
-      1,
-      0,
-      20,
-      0,
-      "MODEL"
-    ],
-    [
-      5,
-      2,
-      0,
-      10,
-      0,
-      "MODEL"
-    ],
     [
       6,
       5,
@@ -561,52 +396,84 @@
       "CONDITIONING"
     ],
     [
-      8,
-      9,
+      14,
+      20,
       0,
+      23,
+      0,
+      "MODEL"
+    ],
+    [
+      15,
+      10,
+      0,
+      23,
+      1,
+      "LATENT"
+    ],
+    [
+      16,
+      21,
+      0,
+      23,
+      2,
+      "INT"
+    ],
+    [
+      17,
+      22,
+      0,
+      23,
+      3,
+      "INT"
+    ],
+    [
+      18,
+      23,
+      0,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      19,
+      23,
+      0,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      20,
+      23,
+      1,
+      20,
+      0,
+      "MODEL"
+    ],
+    [
+      21,
+      23,
+      2,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      22,
+      23,
+      3,
       10,
       3,
       "LATENT"
     ],
     [
-      9,
-      10,
-      0,
-      11,
-      0,
-      "LATENT"
-    ],
-    [
-      10,
+      23,
+      23,
       4,
-      0,
-      11,
-      1,
-      "VAE"
-    ],
-    [
-      11,
-      11,
-      0,
       12,
       0,
       "IMAGE"
-    ],
-    [
-      12,
-      21,
-      0,
-      9,
-      0,
-      "INT"
-    ],
-    [
-      13,
-      22,
-      0,
-      9,
-      1,
-      "INT"
     ]
   ],
   "groups": [],
@@ -614,7 +481,488 @@
   "extra": {},
   "version": 0.4,
   "state": {
-    "lastLinkId": 13,
-    "lastNodeId": 22
+    "lastLinkId": 24,
+    "lastNodeId": 23
+  },
+  "definitions": {
+    "subgraphs": [
+      {
+        "id": "04484b9b-f41e-52e3-8093-39e8960f3535",
+        "version": 1,
+        "state": {
+          "lastGroupId": 0,
+          "lastNodeId": 23,
+          "lastLinkId": 24,
+          "lastRerouteId": 0
+        },
+        "revision": 0,
+        "config": {},
+        "name": "Model internals",
+        "inputNode": {
+          "id": -10,
+          "bounding": [
+            -360,
+            40,
+            160,
+            120
+          ]
+        },
+        "outputNode": {
+          "id": -20,
+          "bounding": [
+            2000,
+            40,
+            140,
+            140
+          ]
+        },
+        "inputs": [
+          {
+            "id": "8bb72443-7b55-53b1-96cd-d31b7291a110",
+            "name": "model",
+            "type": "MODEL",
+            "linkIds": [
+              1
+            ],
+            "localized_name": "model",
+            "label": "Photoreal lighting LoRA: strength 0 turns it off",
+            "pos": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": "bb732671-0730-58de-a07d-645834a24cb3",
+            "name": "samples",
+            "type": "LATENT",
+            "linkIds": [
+              9
+            ],
+            "localized_name": "samples",
+            "label": "KSampler",
+            "pos": [
+              0,
+              20
+            ]
+          },
+          {
+            "id": "8245e9ae-fe40-5916-805c-e1de346f18cf",
+            "name": "width",
+            "type": "INT",
+            "linkIds": [
+              12
+            ],
+            "localized_name": "width",
+            "label": "Render Width",
+            "pos": [
+              0,
+              40
+            ]
+          },
+          {
+            "id": "86e0f9fd-9462-5832-8a3c-6cb8f502a45f",
+            "name": "height",
+            "type": "INT",
+            "linkIds": [
+              13
+            ],
+            "localized_name": "height",
+            "label": "Render Height",
+            "pos": [
+              0,
+              60
+            ]
+          }
+        ],
+        "outputs": [
+          {
+            "id": "17de0028-8575-58eb-9a77-6827786d9d2a",
+            "name": "CLIP",
+            "type": "CLIP",
+            "linkIds": [
+              2
+            ],
+            "localized_name": "CLIP",
+            "label": "CLIP",
+            "pos": [
+              0,
+              0
+            ]
+          },
+          {
+            "id": "183c2268-f7d9-570f-9c36-942c973cc3bd",
+            "name": "MODEL",
+            "type": "MODEL",
+            "linkIds": [
+              4
+            ],
+            "localized_name": "MODEL",
+            "label": "MODEL",
+            "pos": [
+              0,
+              20
+            ]
+          },
+          {
+            "id": "47191598-8ad6-53da-b440-1cc8859ba129",
+            "name": "MODEL",
+            "type": "MODEL",
+            "linkIds": [
+              5
+            ],
+            "localized_name": "MODEL",
+            "label": "MODEL",
+            "pos": [
+              0,
+              40
+            ]
+          },
+          {
+            "id": "d4b3ce9a-8107-5553-a1d9-bdcfe7a6e2a6",
+            "name": "LATENT",
+            "type": "LATENT",
+            "linkIds": [
+              8
+            ],
+            "localized_name": "LATENT",
+            "label": "LATENT",
+            "pos": [
+              0,
+              60
+            ]
+          },
+          {
+            "id": "2d8d84b7-7be5-5377-8d05-13d1322dc18c",
+            "name": "IMAGE",
+            "type": "IMAGE",
+            "linkIds": [
+              11
+            ],
+            "localized_name": "IMAGE",
+            "label": "IMAGE",
+            "pos": [
+              0,
+              80
+            ]
+          }
+        ],
+        "widgets": [],
+        "nodes": [
+          {
+            "id": 1,
+            "type": "UNETLoader",
+            "pos": [
+              40,
+              40
+            ],
+            "size": [
+              320,
+              120
+            ],
+            "flags": {},
+            "order": 0,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  4
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "UNETLoader"
+            },
+            "widgets_values": [
+              "z_image_turbo_bf16.safetensors",
+              "default"
+            ]
+          },
+          {
+            "id": 2,
+            "type": "ModelSamplingAuraFlow",
+            "pos": [
+              380,
+              40
+            ],
+            "size": [
+              320,
+              120
+            ],
+            "flags": {},
+            "order": 1,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "model",
+                "type": "MODEL",
+                "link": 1
+              }
+            ],
+            "outputs": [
+              {
+                "name": "MODEL",
+                "type": "MODEL",
+                "links": [
+                  5
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "ModelSamplingAuraFlow"
+            },
+            "widgets_values": [
+              3.0
+            ]
+          },
+          {
+            "id": 3,
+            "type": "CLIPLoader",
+            "pos": [
+              40,
+              180
+            ],
+            "size": [
+              320,
+              120
+            ],
+            "flags": {},
+            "order": 2,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "name": "CLIP",
+                "type": "CLIP",
+                "links": [
+                  2
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "CLIPLoader"
+            },
+            "widgets_values": [
+              "qwen_3_4b.safetensors",
+              "lumina2",
+              "default"
+            ]
+          },
+          {
+            "id": 4,
+            "type": "VAELoader",
+            "pos": [
+              40,
+              320
+            ],
+            "size": [
+              320,
+              120
+            ],
+            "flags": {},
+            "order": 3,
+            "mode": 0,
+            "inputs": [],
+            "outputs": [
+              {
+                "name": "VAE",
+                "type": "VAE",
+                "links": [
+                  10
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAELoader"
+            },
+            "widgets_values": [
+              "ae.safetensors"
+            ]
+          },
+          {
+            "id": 9,
+            "type": "EmptySD3LatentImage",
+            "pos": [
+              720,
+              480
+            ],
+            "size": [
+              320,
+              120
+            ],
+            "flags": {},
+            "order": 7,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "width",
+                "type": "INT",
+                "widget": {
+                  "name": "width"
+                },
+                "link": 12
+              },
+              {
+                "name": "height",
+                "type": "INT",
+                "widget": {
+                  "name": "height"
+                },
+                "link": 13
+              }
+            ],
+            "outputs": [
+              {
+                "name": "LATENT",
+                "type": "LATENT",
+                "links": [
+                  8
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "EmptySD3LatentImage"
+            },
+            "widgets_values": [
+              1280,
+              720,
+              1
+            ]
+          },
+          {
+            "id": 11,
+            "type": "VAEDecode",
+            "pos": [
+              1400,
+              180
+            ],
+            "size": [
+              320,
+              120
+            ],
+            "flags": {},
+            "order": 9,
+            "mode": 0,
+            "inputs": [
+              {
+                "name": "samples",
+                "type": "LATENT",
+                "link": 9
+              },
+              {
+                "name": "vae",
+                "type": "VAE",
+                "link": 10
+              }
+            ],
+            "outputs": [
+              {
+                "name": "IMAGE",
+                "type": "IMAGE",
+                "links": [
+                  11
+                ],
+                "slot_index": 0
+              }
+            ],
+            "properties": {
+              "Node name for S&R": "VAEDecode"
+            },
+            "widgets_values": []
+          }
+        ],
+        "groups": [],
+        "links": [
+          {
+            "id": 10,
+            "origin_id": 4,
+            "origin_slot": 0,
+            "target_id": 11,
+            "target_slot": 1,
+            "type": "VAE"
+          },
+          {
+            "id": 1,
+            "origin_id": -10,
+            "origin_slot": 0,
+            "target_id": 2,
+            "target_slot": 0,
+            "type": "MODEL"
+          },
+          {
+            "id": 9,
+            "origin_id": -10,
+            "origin_slot": 1,
+            "target_id": 11,
+            "target_slot": 0,
+            "type": "LATENT"
+          },
+          {
+            "id": 12,
+            "origin_id": -10,
+            "origin_slot": 2,
+            "target_id": 9,
+            "target_slot": 0,
+            "type": "INT"
+          },
+          {
+            "id": 13,
+            "origin_id": -10,
+            "origin_slot": 3,
+            "target_id": 9,
+            "target_slot": 1,
+            "type": "INT"
+          },
+          {
+            "id": 2,
+            "origin_id": 3,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 0,
+            "type": "CLIP"
+          },
+          {
+            "id": 4,
+            "origin_id": 1,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 1,
+            "type": "MODEL"
+          },
+          {
+            "id": 5,
+            "origin_id": 2,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 2,
+            "type": "MODEL"
+          },
+          {
+            "id": 8,
+            "origin_id": 9,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 3,
+            "type": "LATENT"
+          },
+          {
+            "id": 11,
+            "origin_id": 11,
+            "origin_slot": 0,
+            "target_id": -20,
+            "target_slot": 4,
+            "type": "IMAGE"
+          }
+        ],
+        "extra": {}
+      }
+    ]
   }
 }

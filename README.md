@@ -112,3 +112,15 @@ CPU thread pools are sized automatically to the container CPU quota and availabl
 ## Editable render size
 
 Set **Render Width** and **Render Height** on the canvas, or **Width** and **Height** in the main controls panel. These fields drive generation directly; resolution presets no longer override them. The added image-resize controls use a center crop to the selected dimensions; change the resize node’s crop setting if needed. Use dimensions supported by the model (multiples of 32 for LTX video, 16 for image workflows). LTX’s two-stage workflows retain their internal half-resolution first pass and upscale to the selected output size. Existing installed workflows and user edits are preserved; open a newly packaged workflow to get these controls.
+
+### Workflow defaults
+
+Seed controls default to randomize, including upstream controls and independent
+first-pass/refinement seeds in nested panels. Random seeds use 15 digits where the
+node range allows it. Use the native after-generate control, or the added seed mode
+selector, to choose Fixed and enter a repeatable seed manually. These choices persist
+when the workflow is saved. Model internals are folded into collapsed subgraphs and notes are
+removed from packaged canvases. Inputs, editable controls and output previews remain
+available. After editing or regenerating workflows, run
+`python3 scripts/workflow_defaults.py` to reapply the canvas layout. These changes ship
+with the next container image; existing pods need the updated image.

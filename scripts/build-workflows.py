@@ -77,3 +77,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# Apply the same canvas defaults after every regeneration.
+if __name__ == "__main__":
+    from workflow_defaults import normalize
+    normalize(Path(__file__).resolve().parents[1])

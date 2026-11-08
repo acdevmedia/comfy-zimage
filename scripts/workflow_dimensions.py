@@ -30,6 +30,9 @@ def remove_input_link(graph, node, slot):
 
 def apply_dimensions(data, default=None):
     """Return whether this workflow supports visual sizing; operate idempotently."""
+    # The packaged subgraph already preserves the render controls and their wiring.
+    if any(n.get('title') == 'Model internals' for n in data['nodes']):
+        return True
     # Native studio nodes already expose width/height from INPUT_TYPES.
     if any(n['type'] in ('AcdevFluxStudio','AcdevIdeogramStudio') for n in data['nodes']):
         return True
